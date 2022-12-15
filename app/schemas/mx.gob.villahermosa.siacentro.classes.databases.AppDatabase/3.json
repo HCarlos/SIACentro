@@ -1,0 +1,250 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 3,
+    "identityHash": "c8b990eea3c58117b619c3957dc4e3c2",
+    "entities": [
+      {
+        "tableName": "users",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `user_id` INTEGER, `username` TEXT, `email` TEXT, `nombre` TEXT, `ap_paterno` TEXT, `ap_materno` TEXT, `curp` TEXT, `emails` TEXT, `celulares` TEXT, `telefonos` TEXT, `fecha_nacimiento` TEXT, `genero` INTEGER NOT NULL, `root` TEXT, `filename` TEXT, `filename_png` TEXT, `filename_thumb` TEXT, `admin` INTEGER, `alumno` INTEGER, `delegado` INTEGER, `session_id` INTEGER NOT NULL, `status_user` INTEGER NOT NULL, `empresa_id` INTEGER NOT NULL, `ip` TEXT, `host` TEXT, `logged` TEXT, `logged_at` TEXT, `logout_at` TEXT, `email_verified_at` TEXT, `created_at` TEXT, `updated_at` TEXT, `user_mig_id` INTEGER NOT NULL, `searchtext` TEXT, `ubicacion_id` INTEGER NOT NULL, `imagen_id` INTEGER NOT NULL, `uuid` TEXT, `token` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "user_id",
+            "columnName": "user_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "username",
+            "columnName": "username",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "email",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "nombre",
+            "columnName": "nombre",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ap_paterno",
+            "columnName": "ap_paterno",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ap_materno",
+            "columnName": "ap_materno",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "curp",
+            "columnName": "curp",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "emails",
+            "columnName": "emails",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "celulares",
+            "columnName": "celulares",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "telefonos",
+            "columnName": "telefonos",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fecha_nacimiento",
+            "columnName": "fecha_nacimiento",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "genero",
+            "columnName": "genero",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "root",
+            "columnName": "root",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "filename",
+            "columnName": "filename",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "filename_png",
+            "columnName": "filename_png",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "filename_thumb",
+            "columnName": "filename_thumb",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "admin",
+            "columnName": "admin",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "alumno",
+            "columnName": "alumno",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "delegado",
+            "columnName": "delegado",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "session_id",
+            "columnName": "session_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "status_user",
+            "columnName": "status_user",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "empresa_id",
+            "columnName": "empresa_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ip",
+            "columnName": "ip",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "host",
+            "columnName": "host",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "logged",
+            "columnName": "logged",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "logged_at",
+            "columnName": "logged_at",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "logout_at",
+            "columnName": "logout_at",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "email_verified_at",
+            "columnName": "email_verified_at",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "created_at",
+            "columnName": "created_at",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "updated_at",
+            "columnName": "updated_at",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "user_mig_id",
+            "columnName": "user_mig_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "searchtext",
+            "columnName": "searchtext",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ubicacion_id",
+            "columnName": "ubicacion_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imagen_id",
+            "columnName": "imagen_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "uuid",
+            "columnName": "uuid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "token",
+            "columnName": "token",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c8b990eea3c58117b619c3957dc4e3c2')"
+    ]
+  }
+}

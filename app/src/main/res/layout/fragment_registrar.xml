@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_registrar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/fragment_horizontal_margin"
+    android:paddingTop="@dimen/fragment_vertical_margin"
+    android:paddingRight="@dimen/fragment_horizontal_margin"
+    android:paddingBottom="@dimen/fragment_vertical_margin"
+    tools:context=".ui.usuario.RegistrarFragment"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/SinLoguear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/fragment_horizontal_margin"
+            android:paddingRight="@dimen/fragment_horizontal_margin"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/proporcione_los_siguientes_datos"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/username"
+                    style="@style/Widget.AppCompat.AutoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:autofillHints="username"
+                    android:hint="@string/prompt_email"
+                    android:inputType="textAutoComplete"
+                    android:selectAllOnFocus="true"
+                    android:textColorHint="@color/white"
+                    app:errorTextColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/text_edit_yuyu">
+
+                <EditText
+                    android:id="@+id/ap_paterno"
+                    style="@style/Widget.AppCompat.AutoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:hint="@string/apellido_paterno"
+                    android:autofillHints="firstName"
+                    android:inputType="textAutoComplete"
+                    android:selectAllOnFocus="true"
+                    android:textColorHint="@color/white"
+                    app:errorTextColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="@+id/username"
+                    app:layout_constraintStart_toStartOf="@+id/username"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/Widget.Design.TextInputLayout"
+
+                >
+
+                <EditText
+                    android:id="@+id/ap_materno"
+                    style="@style/Widget.AppCompat.AutoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:hint="@string/apellido_materno"
+                    android:autofillHints="secondaryName"
+                    android:inputType="textAutoComplete"
+                    android:selectAllOnFocus="true"
+                    android:textColorHint="@color/white"
+                    app:errorTextColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="@+id/ap_paterno"
+                    app:layout_constraintStart_toStartOf="@+id/ap_paterno"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/nombre"
+                    style="@style/Widget.AppCompat.AutoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:hint="@string/nombre"
+                    android:autofillHints="name"
+                    android:inputType="textAutoComplete"
+                    android:selectAllOnFocus="true"
+                    android:textColorHint="@color/white"
+                    app:errorTextColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="@+id/ap_materno"
+                    app:layout_constraintStart_toStartOf="@+id/ap_materno"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:hint="@string/correo_electr_nico"
+                    android:inputType="textEmailAddress"
+                    android:autofillHints="emailAddress"
+                    android:textColorHint="@color/white"
+                    app:errorTextColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="@+id/nombre"
+                    app:layout_constraintStart_toStartOf="@+id/nombre"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/domicilio"
+                    style="@style/Widget.AppCompat.AutoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:hint="@string/domicilio_del_usuario"
+                    android:autofillHints="postalAddress"
+                    android:inputType="textMultiLine"
+                    android:selectAllOnFocus="true"
+                    android:textColorHint="@color/white"
+                    app:errorTextColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="@+id/ap_materno"
+                    app:layout_constraintStart_toStartOf="@+id/ap_materno"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/cardview_two"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginBottom="16dp"
+                >
+
+                <RadioGroup
+                    android:id="@+id/genero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="2dp"
+                    >
+                    <RadioButton android:id="@+id/radio_hembra"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:buttonTint="@color/primary"
+                        android:background="@drawable/cardview_two"
+                        android:text="@string/hembra"
+                        android:checked="true"
+                        android:onClick="onRadioButtonClicked"
+                        android:theme="@style/radiogroup_1"
+                        />
+
+                    <RadioButton android:id="@+id/radio_varon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:buttonTint="@color/primary"
+                        android:background="@drawable/cardview_two"
+                        android:text="@string/varon"
+                        android:onClick="onRadioButtonClicked"
+                        android:theme="@style/radiogroup_1"
+                        />
+                </RadioGroup>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="2dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/password"
+                app:layout_constraintStart_toStartOf="@+id/password"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.3" />
+
+            <Button
+                android:id="@+id/registry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="64dp"
+                android:enabled="true"
+                android:text="@string/registrar"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loading"
+                app:layout_constraintVertical_bias="0.2" />
+
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
