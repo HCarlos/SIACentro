@@ -39,7 +39,8 @@
     <string name="proporcione_los_siguientes_datos">Proporcione los siguientes datos:</string>
     <string name="hembra">Mujer</string>
     <string name="varon">Hombre</string>
-    <string name="cambiar_imagen">Cambiar Imagen</string>
+    <string name="obtener_imagen">Obtener</string>
+    <string name="guardar_imagen">Enviar</string>
 
 
 </resources>

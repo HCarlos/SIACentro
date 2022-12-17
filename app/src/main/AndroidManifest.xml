@@ -2,11 +2,35 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-feature android:name="android.hardware.camera" android:required="true" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
+
+
+    <!-- Always include this permission -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Include only if your app benefits from precise location access. -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+    <queries>
+        <!-- Specific apps you interact with, eg: -->
+        <package android:name="mx.gob.villahermosa.store" />
+        <package android:name="mx.gob.villahermosa.service" />    <!--
+         Specific intents you query for,
+         eg: for a custom share UI
+    -->
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+            <data android:mimeType="image/jpeg" />
+        </intent>
+    </queries>
 
     <application
         android:allowBackup="true"
@@ -36,6 +60,8 @@
 
 
 
+
+
         <activity
             android:name=".ui.usuario.ChangeAvatarActivity"
             android:exported="false"
@@ -45,6 +71,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <action android:name="android.intent.action.SEND_MULTIPLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="application/vnd.google.panorama360+jpg"/>
+                <data android:mimeType="image/*"/>
+            </intent-filter>
+
         </activity>
         <activity
             android:name=".ui.usuario.ChangePasswordActivity"

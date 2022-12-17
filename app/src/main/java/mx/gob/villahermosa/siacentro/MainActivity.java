@@ -1,7 +1,10 @@
 package mx.gob.villahermosa.siacentro;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.MenuItem;
@@ -9,6 +12,7 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.RadioButton;
 import android.widget.Toast;
+//import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -23,8 +27,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import mx.gob.villahermosa.siacentro.classes.Singleton;
+import mx.gob.villahermosa.siacentro.classes.controllers.GPSTracker;
+import mx.gob.villahermosa.siacentro.classes.controllers.Permissions;
 import mx.gob.villahermosa.siacentro.classes.databases.UserDB;
-import mx.gob.villahermosa.siacentro.classes.databases.UserEntity;
+//import mx.gob.villahermosa.siacentro.classes.databases.UserEntity;
 import mx.gob.villahermosa.siacentro.databinding.ActivityMainBinding;
 import mx.gob.villahermosa.siacentro.ui.usuario.ChangeAvatarActivity;
 import mx.gob.villahermosa.siacentro.ui.usuario.ChangePasswordActivity;
@@ -35,15 +41,16 @@ public class MainActivity extends AppCompatActivity  {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    private UserEntity userEntity;
+//    private UserEntity userEntity;
     public Context context;
     public NavController navController;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Singleton singleton = new Singleton();
+//        Singleton singleton = new Singleton();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -67,40 +74,38 @@ public class MainActivity extends AppCompatActivity  {
         bundle.putString("param1", "Hola");
         bundle.putString("param2", "Mundo");
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                int id=menuItem.getItemId();
-                switch (id) {
-                    case R.id.nav_home:
-                        navController.navigate(R.id.nav_home);
-                        break;
-                    case R.id.nav_ingresar:
-                        navController.navigate(R.id.nav_ingresar);
-                        break;
-                    case R.id.nav_registar:
-                        navController.navigate(R.id.nav_registar, bundle);
-                        break;
-                    case R.id.nav_gallery:
-                        navController.navigate(R.id.nav_gallery);
-                        break;
-                    case R.id.nav_about:
-                        navController.navigate(R.id.nav_about);
-                        break;
-                }
-//                NavigationUI.onNavDestinationSelected(menuItem,navController);
-                drawer.closeDrawer(GravityCompat.START);
-                return true;
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            int id=menuItem.getItemId();
+            switch (id) {
+                case R.id.nav_home:
+                    navController.navigate(R.id.nav_home);
+                    break;
+                case R.id.nav_ingresar:
+                    navController.navigate(R.id.nav_ingresar);
+                    break;
+                case R.id.nav_registar:
+                    navController.navigate(R.id.nav_registar, bundle);
+                    break;
+                case R.id.nav_gallery:
+                    navController.navigate(R.id.nav_gallery);
+                    break;
+                case R.id.nav_about:
+                    navController.navigate(R.id.nav_about);
+                    break;
             }
+//                NavigationUI.onNavDestinationSelected(menuItem,navController);
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
         });
 
-
-    }
-
-
-    public void onNavigationItemSelected(@NonNull MenuItem menuItem){
-        Toast.makeText(getApplicationContext(), "Hola : "+menuItem.toString(), Toast.LENGTH_SHORT).show();
+        Permissions permisos = new Permissions(this, getApplicationContext());
+        if ( permisos.chechPermission(this) ){
+            GPSTracker gps = new GPSTracker(getApplicationContext());
+            Location location = gps.getLocation();
+            Singleton.setLatitude(location.getLatitude());
+            Singleton.setLongitude(location.getLongitude());
+            Toast.makeText(getApplicationContext(), "Latitud : "+Singleton.getLatitude() + ", Longitud : " + Singleton.getLongitude(), Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -175,6 +180,15 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case 1234:if(grantResults[0]== PackageManager.PERMISSION_GRANTED && grantResults[1]==PackageManager.PERMISSION_GRANTED){
+                // Do_SOme_Operation();
+            }
+            default:super.onRequestPermissionsResult(requestCode,permissions,grantResults);
+        }
+    }
 
 
 }
