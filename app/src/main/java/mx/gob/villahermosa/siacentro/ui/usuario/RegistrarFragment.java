@@ -32,27 +32,30 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RegistrarFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RegistrarFragment extends Fragment implements Callback<RegistryResponse> {
 
-    private UserEntity userEntity = UserDB.getUserFromId(1);
+    private UserEntity userEntity;
     private FragmentRegistrarBinding binding;
     public Context context;
     public FragmentManager fragmentManager;
     private FragmentKt NavigationHostFragment;
-    private Integer Genero;
 
     @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
+//        String param1 = this.getArguments().getString("param1");
+//        String param2 = this.getArguments().getString("param2");
+//        Toast.makeText(context, param1+" "+param2, Toast.LENGTH_SHORT).show();
+
         binding = FragmentRegistrarBinding.inflate(inflater, container, false);
 
+        context = getContext();
+
         View root = binding.getRoot();
+
+        userEntity = UserDB.getUserFromId(1);
+
 
         return root;
 
@@ -73,7 +76,6 @@ public class RegistrarFragment extends Fragment implements Callback<RegistryResp
         final EditText txtNombre = binding.nombre;
         final EditText txtEmail = binding.email;
         final EditText txtDomicilio = binding.domicilio;
-        final RadioGroup radioBGtn = binding.genero;
 
         final Button btnRegistrar = binding.registry;
         final ProgressBar loadingProgressBar = binding.loading;
@@ -101,7 +103,7 @@ public class RegistrarFragment extends Fragment implements Callback<RegistryResp
     }
 
     @Override
-    public void onResponse(Call<RegistryResponse> call, Response<RegistryResponse> response) {
+    public void onResponse(@NonNull Call<RegistryResponse> call, Response<RegistryResponse> response) {
         if (response.body() != null) {
 
             RegistryResponse registry_response = response.body();
@@ -120,7 +122,7 @@ public class RegistrarFragment extends Fragment implements Callback<RegistryResp
     }
 
     @Override
-    public void onFailure(Call<RegistryResponse> call, Throwable t) {
+    public void onFailure(@NonNull Call<RegistryResponse> call, Throwable t) {
         final ProgressBar loadingProgressBar = binding.loading;
         loadingProgressBar.setVisibility(View.VISIBLE);
         loadingProgressBar.setEnabled(true);

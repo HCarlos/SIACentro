@@ -26,6 +26,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -68,6 +69,7 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
     private ActivityChangeAvatarBinding binding;
     public ProgressBar progress;
     public Button btnCambiarImagen;
+    public ImageButton btnRotateImagen;
     public Button btnSaveImagen;
     public Bitmap imagenBitMapASubir;
     public Uri photoURI;
@@ -111,16 +113,24 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
         }
 
 
-        showImage();
+
+        avatar = (ImageView) findViewById(R.id.avatar);
 
         progress = (ProgressBar) findViewById(R.id.loading_avatar);
-        //this.progress = progress;
         btnCambiarImagen = (Button) findViewById(R.id.btnCallMenu);
         btnCambiarImagen.setOnClickListener(v -> showBottomSheetDialog());
+
+        btnRotateImagen = (ImageButton) findViewById(R.id.btnRotateImagen);
+        btnRotateImagen.setVisibility(View.INVISIBLE);
+        btnRotateImagen.setOnClickListener(v -> {
+            rotarImagen(imagenBitMapASubir);
+        });
 
         btnSaveImagen = (Button) findViewById(R.id.btnSaveImabe);
         btnSaveImagen.setOnClickListener(v -> savePhoto());
         btnSaveImagen.setEnabled(false);
+
+        showImage();
 
         IsIMage = false;
 
@@ -170,21 +180,6 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
 
 
 
-    private File createImageFile() throws IOException {
-        photoPath = null;
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "SIACentro_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-        photoPath  = image.getAbsolutePath();;
-        Log.w("NOMBRE_ARCHIVO",photoPath);
-        return image;
-    }
-
     // Procesamiento de la Fotografìa
     ActivityResultLauncher<Intent> tomarFoto = registerForActivityResult(
         new ActivityResultContracts.StartActivityForResult(),
@@ -199,15 +194,11 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
                 if (photoPath != null) {
                     File imgFile = new  File(photoPath);
                     if(imgFile.exists()) {
-                        Bitmap myBitmap = BitmapFactory.decodeFile(photoPath);
-                        Matrix matrix = new Matrix();
-                        matrix.postRotate(90);
-                        Bitmap scaledBitmap = Bitmap.createScaledBitmap(myBitmap, 800, 600, true);
-                        Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
-//                        Toast.makeText(getApplicationContext(), "Image path 2 " + photoPath, Toast.LENGTH_LONG).show();
-                        avatar.setImageBitmap(rotatedBitmap);
-                        imagenBitMapASubir = rotatedBitmap;
+                        Bitmap bitmap = BitmapFactory.decodeFile(photoPath);
+                        imagenBitMapASubir = Bitmap.createScaledBitmap(bitmap, 800, 600, true);
+                        avatar.setImageBitmap(imagenBitMapASubir);
                         btnSaveImagen.setEnabled(true);
+                        btnRotateImagen.setVisibility(View.VISIBLE);
                         IsIMage = true;
                     }
 
@@ -297,6 +288,8 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
         progress .setVisibility(View.INVISIBLE);
         btnCambiarImagen .setEnabled(true);
         btnSaveImagen.setEnabled(false);
+        btnRotateImagen.setVisibility(View.INVISIBLE);
+
         IsIMage = true;
 
     }
@@ -304,6 +297,7 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
     @Override
     public void onFailure(Call<ComboResponse> call, Throwable t) {
         progress .setVisibility(View.INVISIBLE);
+        btnRotateImagen.setVisibility(View.INVISIBLE);
         btnCambiarImagen .setEnabled(true);
         btnSaveImagen.setEnabled(false);
         IsIMage = true;
@@ -315,8 +309,7 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
     public void showImage(){
 
         String imageUri = userEntity.getURLImagenArchivo();
-        ImageView avatar = (ImageView) findViewById(R.id.avatar);
-        this.avatar = avatar;
+//        avatar = (ImageView) findViewById(R.id.avatar);
 
         int dr = R.drawable.empty_user_female;
         if (this.userEntity.getGenero() == 1){
@@ -333,10 +326,33 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
 
     }
 
+    private File createImageFile() throws IOException {
+        photoPath = null;
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "SIACentro_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".png",         /* suffix */
+                storageDir      /* directory */
+        );
+        photoPath  = image.getAbsolutePath();;
+        Log.w("NOMBRE_ARCHIVO",photoPath);
+        return image;
+    }
+
+    public void rotarImagen(Bitmap bitmap){
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+        imagenBitMapASubir = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        avatar.setImageBitmap(imagenBitMapASubir);
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
-            case 1234:if(grantResults[0]== PackageManager.PERMISSION_GRANTED && grantResults[1]==PackageManager.PERMISSION_GRANTED){
+            case 1234:
+                if(grantResults[0]== PackageManager.PERMISSION_GRANTED && grantResults[1]==PackageManager.PERMISSION_GRANTED){
                 // Do_SOme_Operation();
             }
             default:super.onRequestPermissionsResult(requestCode,permissions,grantResults);

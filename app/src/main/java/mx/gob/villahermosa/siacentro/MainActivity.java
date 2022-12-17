@@ -30,7 +30,6 @@ import mx.gob.villahermosa.siacentro.classes.Singleton;
 import mx.gob.villahermosa.siacentro.classes.controllers.GPSTracker;
 import mx.gob.villahermosa.siacentro.classes.controllers.Permissions;
 import mx.gob.villahermosa.siacentro.classes.databases.UserDB;
-//import mx.gob.villahermosa.siacentro.classes.databases.UserEntity;
 import mx.gob.villahermosa.siacentro.databinding.ActivityMainBinding;
 import mx.gob.villahermosa.siacentro.ui.usuario.ChangeAvatarActivity;
 import mx.gob.villahermosa.siacentro.ui.usuario.ChangePasswordActivity;
@@ -41,7 +40,6 @@ public class MainActivity extends AppCompatActivity  {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-//    private UserEntity userEntity;
     public Context context;
     public NavController navController;
 
@@ -50,11 +48,8 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        Singleton singleton = new Singleton();
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
 
         setSupportActionBar(binding.appBarMain.toolbar);
 
@@ -68,7 +63,6 @@ public class MainActivity extends AppCompatActivity  {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
 
         Bundle bundle = new Bundle();
         bundle.putString("param1", "Hola");
