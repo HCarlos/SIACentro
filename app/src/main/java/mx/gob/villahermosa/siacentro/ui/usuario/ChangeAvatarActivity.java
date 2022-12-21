@@ -285,7 +285,7 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
             Toast.makeText(getApplicationContext(), combo_response.getMsg(), Toast.LENGTH_LONG).show();
 
         }
-        progress .setVisibility(View.INVISIBLE);
+        progress.setVisibility(View.INVISIBLE);
         btnCambiarImagen .setEnabled(true);
         btnSaveImagen.setEnabled(false);
         btnRotateImagen.setVisibility(View.INVISIBLE);

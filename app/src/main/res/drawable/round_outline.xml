@@ -9,7 +9,7 @@
 
         />
     <solid
-        android:color="#00FFFFFF"
+        android:color="#CCCCCC"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"/>
     />

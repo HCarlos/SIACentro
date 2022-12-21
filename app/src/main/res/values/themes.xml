@@ -21,7 +21,6 @@
         <item name="colorControlActivated">@color/primary</item>
         <item name="android:textSize">16dp</item>
 
-
     </style>
 
     <style name="Theme.SIACentro.NoActionBar">
@@ -38,5 +37,32 @@
 <!--        <item name="windowActionBar">false</item>-->
 <!--        <item name="android:windowActionBar">false</item>-->
     </style>
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+    </style>
+
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorSecondary">@color/secondary</item>
+    </style>
+
+
+
+    <style name="MaterialDialogSheet" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/darker_gray</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
+
+
+
 
 </resources>

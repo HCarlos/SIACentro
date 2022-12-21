@@ -71,6 +71,18 @@ public interface ApiLoginServiceInterface {
             @Field("user_id") int user_id
     );
 
+    @FormUrlEncoded
+    @POST("user/change/password")
+    @Headers("Accept: application/json")
+    Call<ComboResponse> setChangePassword(
+            @Header("Authorization") String autoriza,
+            @Field("password_actual") String password_actual,
+            @Field("password") String password,
+            @Field("password_confirmation") String password_confirmation,
+            @Field("user_id") int user_id
+    );
+
+
 
 
 }

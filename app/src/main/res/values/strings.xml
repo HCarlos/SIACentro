@@ -41,6 +41,10 @@
     <string name="varon">Hombre</string>
     <string name="obtener_imagen">Obtener</string>
     <string name="guardar_imagen">Enviar</string>
+    <string name="Hombre">Hombre</string>
+    <string name="Mujer">Mujer</string>
+    <string name="Username">Username</string>
+    <string name="Password">Password</string>
 
 
 </resources>

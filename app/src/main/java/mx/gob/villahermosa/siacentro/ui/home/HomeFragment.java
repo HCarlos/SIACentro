@@ -77,30 +77,30 @@ public class HomeFragment extends Fragment {
             LinearLayout llSinLogueo = binding.llSinLogueo;
             llSinLogueo.setVisibility(View.INVISIBLE);
 
-            String imageUri = userentity.getURLImagenArchivo();
-            ImageView ivBasicImage = (ImageView) binding.imgHomeUserFrag;
+//            String imageUri = userentity.getURLImagenArchivo();
+//            ImageView ivBasicImage = (ImageView) binding.imgHomeUserFrag;
 
-            int dr = R.drawable.empty_user_female;
-            if (this.userEntity.getGenero() == 1){
-                dr = R.drawable.empty_user_male;
-            }
-            Picasso
-                    .get()
-                    .load(imageUri)
-                    .networkPolicy(NetworkPolicy.NO_CACHE)
-                    .memoryPolicy(MemoryPolicy.NO_CACHE)
-                    .placeholder(dr)
-                    .error(dr)
-                    .into(ivBasicImage);
+//            int dr = R.drawable.empty_user_female;
+//            if (this.userEntity.getGenero() == 1){
+//                dr = R.drawable.empty_user_male;
+//            }
+//            Picasso
+//                    .get()
+//                    .load(imageUri)
+//                    .networkPolicy(NetworkPolicy.NO_CACHE)
+//                    .memoryPolicy(MemoryPolicy.NO_CACHE)
+//                    .placeholder(dr)
+//                    .error(dr)
+//                    .into(ivBasicImage);
 
-            TextView txtUsername = (TextView) binding.FullName;
-            txtUsername.setText(userentity.getFullName());
+//            TextView txtUsername = (TextView) binding.FullName;
+//            txtUsername.setText(userentity.getFullName());
 
-            TextView txtlblUsername = (TextView) binding.lblFullName;
-            String lbl = "Bienvenido!!";
-            if ( userentity.getGenero() == 0 )
-                lbl = "Bienvenda!";
-            txtlblUsername.setText(lbl);
+//            TextView txtlblUsername = (TextView) binding.lblFullName;
+//            String lbl = "Bienvenido!!";
+//            if ( userentity.getGenero() == 0 )
+//                lbl = "Bienvenda!";
+//            txtlblUsername.setText(lbl);
 
         }else{
             LinearLayout ll1 = binding.lnHrz;
