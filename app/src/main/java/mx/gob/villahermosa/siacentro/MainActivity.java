@@ -14,10 +14,13 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 //import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -29,8 +32,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import mx.gob.villahermosa.siacentro.classes.Singleton;
 import mx.gob.villahermosa.siacentro.classes.controllers.GPSTracker;
 import mx.gob.villahermosa.siacentro.classes.controllers.Permissions;
+import mx.gob.villahermosa.siacentro.classes.controllers.PhotoUtils;
 import mx.gob.villahermosa.siacentro.classes.databases.UserDB;
+import mx.gob.villahermosa.siacentro.classes.databases.UserEntity;
 import mx.gob.villahermosa.siacentro.databinding.ActivityMainBinding;
+import mx.gob.villahermosa.siacentro.ui.home.DenunciaActivity;
 import mx.gob.villahermosa.siacentro.ui.usuario.ChangeAvatarActivity;
 import mx.gob.villahermosa.siacentro.ui.usuario.ChangePasswordActivity;
 import mx.gob.villahermosa.siacentro.ui.usuario.ProfileActivity;
@@ -42,6 +48,7 @@ public class MainActivity extends AppCompatActivity  {
     private ActivityMainBinding binding;
     public Context context;
     public NavController navController;
+    FloatingActionButton fab;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -68,11 +75,18 @@ public class MainActivity extends AppCompatActivity  {
         bundle.putString("param1", "Hola");
         bundle.putString("param2", "Mundo");
 
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+
         navigationView.setNavigationItemSelectedListener(menuItem -> {
+            fab.setVisibility(View.INVISIBLE);
             int id=menuItem.getItemId();
             switch (id) {
                 case R.id.nav_home:
                     navController.navigate(R.id.nav_home);
+                    UserEntity userentity = UserDB.getUserFromId(1);
+                    if (userentity!= null) {
+                        fab.setVisibility(View.VISIBLE);
+                    }
                     break;
                 case R.id.nav_ingresar:
                     navController.navigate(R.id.nav_ingresar);
@@ -87,9 +101,18 @@ public class MainActivity extends AppCompatActivity  {
                     navController.navigate(R.id.nav_about);
                     break;
             }
-//                NavigationUI.onNavDestinationSelected(menuItem,navController);
             drawer.closeDrawer(GravityCompat.START);
             return true;
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Snackbar.make(v, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                getServicios(v);
+
+            }
         });
 
         Permissions permisos = new Permissions(this, getApplicationContext());
@@ -183,6 +206,35 @@ public class MainActivity extends AppCompatActivity  {
             default:super.onRequestPermissionsResult(requestCode,permissions,grantResults);
         }
     }
+
+    public void getServicios(View view){
+        PopupMenu popup = new PopupMenu(MainActivity.this, fab);
+        popup.getMenuInflater().inflate(R.menu.popup_servicios, popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+//                Toast.makeText(MainActivity.this,"You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                procesaMenu(item);
+            return true;
+            }
+        });
+        popup.show();//showing popup menu
+    }
+
+    public boolean procesaMenu(MenuItem item){
+        switch (item.getItemId()) {
+            default:
+                Intent i = new Intent(this, DenunciaActivity.class);
+                String id = (String) String.valueOf(item.getItemId());
+                String servicio = (String) item.getTitle();
+                Bundle bundle = new Bundle();
+                bundle.putString("menu_id", id);
+                bundle.putString("menu_title", servicio);
+                i.putExtras(bundle);
+                startActivity(i);
+                return true;
+        }
+    }
+
 
 
 }

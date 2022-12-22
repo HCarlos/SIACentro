@@ -8,19 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.FragmentKt;
 
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import mx.gob.villahermosa.siacentro.R;
 import mx.gob.villahermosa.siacentro.classes.databases.UserDB;
@@ -33,6 +30,8 @@ public class HomeFragment extends Fragment {
     private UserEntity userEntity;
     private Context context;
     private FragmentKt NavigationHostFragment;
+    private FloatingActionButton fab;
+    private View root;
 
 
 
@@ -41,7 +40,8 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        root = binding.getRoot();
+        fab = (FloatingActionButton) root.findViewById(R.id.fab);
 
         return root;
     }
@@ -55,6 +55,7 @@ public class HomeFragment extends Fragment {
 
         this.mostrar_usuario_logeado(this.context);
 
+        fab = (FloatingActionButton) root.findViewById(R.id.fab);
 
     }
 
@@ -77,30 +78,8 @@ public class HomeFragment extends Fragment {
             LinearLayout llSinLogueo = binding.llSinLogueo;
             llSinLogueo.setVisibility(View.INVISIBLE);
 
-//            String imageUri = userentity.getURLImagenArchivo();
-//            ImageView ivBasicImage = (ImageView) binding.imgHomeUserFrag;
+            if ( fab != null ) { fab.setVisibility(View.VISIBLE); };
 
-//            int dr = R.drawable.empty_user_female;
-//            if (this.userEntity.getGenero() == 1){
-//                dr = R.drawable.empty_user_male;
-//            }
-//            Picasso
-//                    .get()
-//                    .load(imageUri)
-//                    .networkPolicy(NetworkPolicy.NO_CACHE)
-//                    .memoryPolicy(MemoryPolicy.NO_CACHE)
-//                    .placeholder(dr)
-//                    .error(dr)
-//                    .into(ivBasicImage);
-
-//            TextView txtUsername = (TextView) binding.FullName;
-//            txtUsername.setText(userentity.getFullName());
-
-//            TextView txtlblUsername = (TextView) binding.lblFullName;
-//            String lbl = "Bienvenido!!";
-//            if ( userentity.getGenero() == 0 )
-//                lbl = "Bienvenda!";
-//            txtlblUsername.setText(lbl);
 
         }else{
             LinearLayout ll1 = binding.lnHrz;
@@ -123,19 +102,12 @@ public class HomeFragment extends Fragment {
                 Log.e("NAVIGATION", "TRES");
             });
 
-//            btnIngresar1.setOnClickListener(v -> {
-//                FragmentKt.findNavController(this).navigate(R.id.nav_ingresar);
-//            });
-
             btnRegistry1.setOnClickListener(v -> {
                 assert getParentFragment() != null;
                 FragmentKt.findNavController(getParentFragment()).navigate(R.id.nav_registar);
-//                Navigation.findNavController(requireView()).navigate(R.id.nav_about);
             });
 
-//            btnRegistry1.setOnClickListener(v -> {
-//                FragmentKt.findNavController(this).navigate(R.id.nav_about);
-//            });
+            if ( fab != null ) { fab.setVisibility(View.VISIBLE); };
 
         }
 
@@ -153,4 +125,5 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
 }

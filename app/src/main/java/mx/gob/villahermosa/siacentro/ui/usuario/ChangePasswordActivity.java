@@ -81,51 +81,48 @@ public class ChangePasswordActivity extends AppCompatActivity implements Callbac
             @Override
             public void onClick(View v) {
 //                loading_change_paword.setVisibility(View.VISIBLE);
-                DialogAlertConfirm d = new DialogAlertConfirm(ChangePasswordActivity.this, context);
-                AlertDialog ad = d.confirm( "Desea continuar?\n\nEste cambio es irreversible.\n\n");
-                ad.show();
-                ad.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        pas1 = binding.password1.getText().toString().trim();
-                        pas2 = binding.password2.getText().toString().trim();
-                        pas3 = binding.password3.getText().toString().trim();
-                        if ( Validate() ) {
+                pas1 = binding.password1.getText().toString().trim();
+                pas2 = binding.password2.getText().toString().trim();
+                pas3 = binding.password3.getText().toString().trim();
+                if (Validate()) {
+                    DialogAlertConfirm d = new DialogAlertConfirm(ChangePasswordActivity.this, context);
+                    AlertDialog ad = d.confirm("Desea continuar?\n\nEste cambio es irreversible.\n\n");
+                    ad.show();
+                    ad.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
                             sendData();
+                            ad.dismiss();
                         }
-                        ad.dismiss();
-                    }
-                });
+                    });
+                }
 
             }
         });
     }
 
     private boolean Validate() {
-        boolean retorno = true;
+        boolean retorno = false;
+        String errores = "";
 
-        if (pas1 == ""){
-            retorno = false;
-            SiacDialogBasicFragment sd = new SiacDialogBasicFragment("Su password actual no puede estar vacío.");
-            sd.show(getSupportFragmentManager(),"");
+        if (Objects.equals(pas1, "")){
+            errores += "Su password actual no puede estar vacío.\n";
+        } else if (Objects.equals(pas2, "")){
+            errores += "Su nuevo password no puede estar vacío.\n";
+        } else if (Objects.equals(pas3, "")){
+            errores += "La repetición de su nuevo password no puede estar vacío.\n";
+        } else if (!pas2.equals(pas3)){
+            errores += "Su nuevo password ("+pas2+") y la repetición de su nuevo password ("+pas3+") no coinciden.\n";
+        } else {
+            retorno = true;
         }
-        if (pas2 == ""){
-            retorno = false;
-            SiacDialogBasicFragment sd = new SiacDialogBasicFragment("Su nuevo password no puede estar vacío.");
-            sd.show(getSupportFragmentManager(),"");
-        }
-        if (pas3 == ""){
-            retorno = false;
-            SiacDialogBasicFragment sd = new SiacDialogBasicFragment("La repetición de su nuevo password no puede estar vacío.");
-            sd.show(getSupportFragmentManager(),"");
-        }
-        if (!pas2.equals(pas3)){
-            retorno = false;
-            SiacDialogBasicFragment sd = new SiacDialogBasicFragment("Su nuevo password ("+pas2+") y la repetición de su nuevo password ("+pas3+") no coinciden.");
+        if (!errores.equals("")){
+            SiacDialogBasicFragment sd = new SiacDialogBasicFragment(errores);
             sd.show(getSupportFragmentManager(),"");
         }
 
         return retorno;
+
     }
 
 

@@ -103,14 +103,14 @@ public class Utilidades {
         activity = _activity;
         Context context = activity.getApplicationContext();
         tipo = _tipo;
-        Singleton.setIsCameraPresent(false);
+//        Singleton.setIsCameraPresent(false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)) {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA},
                     123);
         } else {
             if (tipo == 0) {
-                Singleton.setIsCameraPresent(true);
+//                Singleton.setIsCameraPresent(true);
             }
         }
     }
@@ -128,7 +128,7 @@ public class Utilidades {
                 }
                 if (tipo == 2) {
                     // setFoto();
-                    Singleton.setIsCameraPresent(true);
+//                    Singleton.setIsCameraPresent(true);
                 }
 
             } else {
@@ -158,7 +158,7 @@ public class Utilidades {
             Singleton.setLongitude(current_longitude);
             Singleton.setAltitud(current_altitud);
 
-            Singleton.setIsGPS(true);
+//            Singleton.setIsGPS(true);
 
             Log.d("LAT LON ALT", "" + current_lattitude + " | "
                     + current_longitude + " | "
@@ -173,7 +173,7 @@ public class Utilidades {
                 Singleton.setLongitude(current_longitude);
                 Singleton.setAltitud(current_altitud);
 
-                Singleton.setIsGPS(false);
+//                Singleton.setIsGPS(false);
 
             }
 
@@ -184,7 +184,7 @@ public class Utilidades {
             Singleton.setLatitude(current_lattitude);
             Singleton.setLongitude(current_longitude);
 
-            Singleton.setIsGPS(false);
+//            Singleton.setIsGPS(false);
 
         }
 
@@ -208,8 +208,8 @@ public class Utilidades {
     public static void getSMSData() {
 //        TelephonyManager tManager = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
         TelephonyManager tManager = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
-        Singleton.setNombre(tManager.getSimOperatorName());
-        Singleton.setCelular(tManager.getLine1Number());
+//        Singleton.setNombre(tManager.getSimOperatorName());
+//        Singleton.setCelular(tManager.getLine1Number());
     }
 
     public static void setFoto(Activity activity) {

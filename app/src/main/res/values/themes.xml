@@ -37,6 +37,7 @@
 <!--        <item name="windowActionBar">false</item>-->
 <!--        <item name="android:windowActionBar">false</item>-->
     </style>
+
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorOnPrimary">@android:color/white</item>

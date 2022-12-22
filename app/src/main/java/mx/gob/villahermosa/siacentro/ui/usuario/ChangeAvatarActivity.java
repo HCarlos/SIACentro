@@ -222,7 +222,7 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
                     try {
                         imageStream = getContentResolver().openInputStream(selectedImage);
                         Bitmap bmp = BitmapFactory.decodeStream(imageStream);
-                        Singleton.setImagen(avatar);
+//                        Singleton.setImagen(avatar);
                         Singleton.setUriData(PhotoUtils.getImageUri(context, bmp));
                         imagenBitMapASubir = bmp;
                         btnSaveImagen.setEnabled(true);

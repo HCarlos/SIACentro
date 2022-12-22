@@ -41,7 +41,6 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        this.setTitle(R.string.ver_perfil);
 
         userEntity = UserDB.getUserFromId(1);
         binding = ActivityProfileBinding.inflate(getLayoutInflater());

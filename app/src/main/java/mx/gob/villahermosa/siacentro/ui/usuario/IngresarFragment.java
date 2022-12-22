@@ -38,6 +38,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Downloader;
 import com.squareup.picasso.MemoryPolicy;
@@ -165,7 +166,6 @@ public class IngresarFragment extends Fragment implements Callback<UsuarioRespon
             llSinLogear.setVisibility(View.VISIBLE);
             llLogueada.setVisibility(View.GONE);
         }
-//        Toast.makeText(context.getApplicationContext(), "entro : ", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -224,6 +224,10 @@ public class IngresarFragment extends Fragment implements Callback<UsuarioRespon
             } else {
                 msg = "Bienvenido";
             }
+
+            final FloatingActionButton fab = (FloatingActionButton) binding.getRoot().findViewById(R.id.fab);
+            if ( fab != null ) { fab.setVisibility(View.VISIBLE); };
+
             NavigationHostFragment.findNavController(this).navigate(R.id.nav_home);
             evalLogin();
         }
