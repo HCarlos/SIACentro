@@ -106,13 +106,13 @@ public class ChangePasswordActivity extends AppCompatActivity implements Callbac
         String errores = "";
 
         if (Objects.equals(pas1, "")){
-            errores += "Su password actual no puede estar vacío.\n";
+            errores += "No ha proporcionado su Password Actual.\n";
         } else if (Objects.equals(pas2, "")){
-            errores += "Su nuevo password no puede estar vacío.\n";
+            errores += "No ha proporcionado su Nuevo Password.\n";
         } else if (Objects.equals(pas3, "")){
-            errores += "La repetición de su nuevo password no puede estar vacío.\n";
+            errores += "No ha Confirmado su Nuevo Password.\n";
         } else if (!pas2.equals(pas3)){
-            errores += "Su nuevo password ("+pas2+") y la repetición de su nuevo password ("+pas3+") no coinciden.\n";
+            errores += "Su Nuevo Password ("+pas2+") y la Repetición de su Nuevo Password ("+pas3+") no coinciden.\n";
         } else {
             retorno = true;
         }

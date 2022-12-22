@@ -42,8 +42,8 @@
 
             <ImageButton
                 android:id="@+id/btnRotateImagen"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_gravity="end"
                 android:visibility="gone"
                 android:background="@drawable/ic_rotate_90_degrees_cw_24"
@@ -68,15 +68,25 @@
                 app:layout_constraintVertical_bias="0.3"
                 />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnCallMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="start"
                 android:layout_marginTop="32dp"
-                android:text="@string/obtener_imagen"
+                android:enabled="true"
                 android:textColor="@color/white"
-                android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@+id/loading_avatar" />
+                android:text="Obtener Imagen"
+                android:backgroundTint="@color/secondary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loading_avatar"
+                app:layout_constraintVertical_bias="0.2"
+                />
+
+
+
 
             <Button
                 android:id="@+id/btnSaveImabe"

@@ -29,7 +29,7 @@
     <string name="registrate">RegÍstrate</string>
     <string name="ver_perfil">Ver Perfil</string>
     <string name="cambiar_password">Cambiar Password</string>
-    <string name="cambiar_avatar">Cambiar Avatar</string>
+    <string name="cambiar_avatar">Cambiar Imagen</string>
     <string name="apellido_paterno">Apellido Paterno</string>
     <string name="apellido_materno">Apellido Materno</string>
     <string name="nombre">Nombre</string>
@@ -39,7 +39,7 @@
     <string name="proporcione_los_siguientes_datos">Proporcione los siguientes datos:</string>
     <string name="hembra">Mujer</string>
     <string name="varon">Hombre</string>
-    <string name="obtener_imagen">Obtener</string>
+    <string name="obtener_imagen">Obtener Imagen</string>
     <string name="guardar_imagen">Enviar</string>
     <string name="Hombre">Hombre</string>
     <string name="Mujer">Mujer</string>

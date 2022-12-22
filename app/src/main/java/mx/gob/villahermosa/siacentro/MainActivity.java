@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity  {
             Location location = gps.getLocation();
             Singleton.setLatitude(location.getLatitude());
             Singleton.setLongitude(location.getLongitude());
-            Toast.makeText(getApplicationContext(), "Latitud : "+Singleton.getLatitude() + ", Longitud : " + Singleton.getLongitude(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "Latitud : "+Singleton.getLatitude() + ", Longitud : " + Singleton.getLongitude(), Toast.LENGTH_SHORT).show();
         }
     }
 
