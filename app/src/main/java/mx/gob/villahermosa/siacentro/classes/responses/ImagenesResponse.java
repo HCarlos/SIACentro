@@ -12,7 +12,7 @@ public class ImagenesResponse {
     protected Double longitud = 0.00;
     protected String url = "";
     protected String url_png = "";
-    protected String url_thum = "";
+    protected String url_thumb = "";
 
     public int getId() {
         return id;
@@ -102,11 +102,12 @@ public class ImagenesResponse {
         this.url_png = url_png;
     }
 
-    public String getUrl_thum() {
-        return url_thum;
+    public String getUrl_thumb() {
+        return url_thumb;
     }
 
-    public void setUrl_thum(String url_thum) {
-        this.url_thum = url_thum;
+    public void setUrl_thumb(String url_thumb) {
+        this.url_thumb = url_thumb;
     }
+
 }

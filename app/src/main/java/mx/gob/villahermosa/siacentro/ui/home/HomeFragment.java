@@ -1,5 +1,7 @@
 package mx.gob.villahermosa.siacentro.ui.home;
 
+import static androidx.recyclerview.widget.LinearLayoutManager.VERTICAL;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
@@ -8,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -17,10 +21,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.FragmentKt;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
+import java.util.Objects;
 
 import mx.gob.villahermosa.siacentro.R;
 import mx.gob.villahermosa.siacentro.classes.Singleton;
@@ -32,6 +39,7 @@ import mx.gob.villahermosa.siacentro.classes.responses.DenunciasHeaderResponse;
 import mx.gob.villahermosa.siacentro.classes.responses.DenunciasResponse;
 import mx.gob.villahermosa.siacentro.classes.responses.ImagenesResponse;
 import mx.gob.villahermosa.siacentro.data.adapters.ApiDenunciaAdapter;
+import mx.gob.villahermosa.siacentro.data.adapters.MisDenunciasAdapter;
 import mx.gob.villahermosa.siacentro.databinding.FragmentHomeBinding;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,6 +55,8 @@ public class HomeFragment extends Fragment implements Callback<DenunciasHeaderRe
     private FragmentKt NavigationHostFragment;
     private FloatingActionButton fab;
     private View root;
+    private ImageView btnRefresh;
+    private RecyclerView rvDenuncia;
 
 
 
@@ -85,7 +95,7 @@ public class HomeFragment extends Fragment implements Callback<DenunciasHeaderRe
 
 
             LinearLayout ll1 = binding.lnHrz;
-            ScrollView scv1 = binding.scroll1;
+            RelativeLayout scv1 = binding.scroll1;
             ll1.setVisibility(View.VISIBLE);
             scv1.setVisibility(View.VISIBLE);
 
@@ -99,7 +109,7 @@ public class HomeFragment extends Fragment implements Callback<DenunciasHeaderRe
 
         }else{
             LinearLayout ll1 = binding.lnHrz;
-            ScrollView scv1 = binding.scroll1;
+            RelativeLayout scv1 = binding.scroll1;
 
             ll1.setVisibility(View.INVISIBLE);
             scv1.setVisibility(View.INVISIBLE);
@@ -166,7 +176,7 @@ public class HomeFragment extends Fragment implements Callback<DenunciasHeaderRe
 
             denuncias_response = denuncia_header_response.getDenuncias();
 
-            Toast.makeText(context, denuncia_header_response.getMsg(), Toast.LENGTH_LONG).show();
+            LlenarDatos();
 
         }
 
@@ -175,6 +185,17 @@ public class HomeFragment extends Fragment implements Callback<DenunciasHeaderRe
     @Override
     public void onFailure(@NonNull Call<DenunciasHeaderResponse> call, Throwable t) {
         Toast.makeText(context,  t.getMessage(), Toast.LENGTH_LONG).show();
+    }
+
+    public void LlenarDatos(){
+        LinearLayoutManager llm = new LinearLayoutManager(context);
+        llm.setOrientation(VERTICAL);
+        MisDenunciasAdapter adapter = new MisDenunciasAdapter(this.getActivity(),context,denuncias_response);
+        rvDenuncia = (RecyclerView) requireActivity().findViewById(R.id.rvMisDenuncias);
+        rvDenuncia.setLayoutManager(llm);
+        rvDenuncia.setAdapter(adapter);
+
 
     }
+
 }

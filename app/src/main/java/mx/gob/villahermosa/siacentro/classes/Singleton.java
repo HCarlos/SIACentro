@@ -16,6 +16,7 @@ public class Singleton {
     private static final String pathFile = null;
     private static Uri UriData = null;
     public static final String access_token = "";
+    public static int denuncia_id = 0;
 
     private static Singleton ourInstance = new Singleton();
     static Singleton getInstance() {
@@ -88,5 +89,11 @@ public class Singleton {
 
     public static void reset() { ourInstance = new Singleton(); }
 
+    public static int getDenuncia_id() {
+        return denuncia_id;
+    }
 
+    public static void setDenuncia_id(int denuncia_id) {
+        Singleton.denuncia_id = denuncia_id;
+    }
 }
