@@ -89,13 +89,13 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
-    <string name="fuga_de_agua_potable">Fuga de Agua Potable</string>
-    <string name="fuga_de_aguas_negras">Fuga de Aguas Negras</string>
+    <string name="fuga_de_agua_potable">FUGA DE AGUA POTABLE</string>
+    <string name="fuga_de_aguas_negras">ALCANTARILLADO / AGUAS NEGRAS</string>
     <string name="alcantarilla_sin_tapa">Alcantarilla sin Tapa</string>
-    <string name="socav_n">Socavón</string>
-    <string name="reparaci_n_calles_bacheo">Reparación Calles (Bacheo)</string>
-    <string name="alumbrado_p_blico">Alumbrado Público</string>
-    <string name="recolecci_n_de_basura">Recolección de Basura</string>
+    <string name="socav_n">SOCAVON / HUNDIMIENTO</string>
+    <string name="reparaci_n_calles_bacheo">REPARACION DE CALLES (BACHEO)</string>
+    <string name="alumbrado_p_blico">ALUMBRADO PÚBLICO</string>
+    <string name="recolecci_n_de_basura">RECOLECCIÓN DE BASURA</string>
 
 
 </resources>

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/id_10001"
+        android:id="@+id/id_207"
         android:title="@string/fuga_de_agua_potable" />
     <item
-        android:id="@+id/id_10002"
+        android:id="@+id/id_261"
         android:title="@string/fuga_de_aguas_negras"/>
+<!--    <item-->
+<!--        android:id="@+id/id_10003"-->
+<!--        android:title="@string/alcantarilla_sin_tapa"/>-->
     <item
-        android:id="@+id/id_10003"
-        android:title="@string/alcantarilla_sin_tapa"/>
-    <item
-        android:id="@+id/id_10004"
+        android:id="@+id/id_269"
         android:title="@string/socav_n"/>
     <item
-        android:id="@+id/id_10005"
+        android:id="@+id/id_14"
         android:title="@string/reparaci_n_calles_bacheo"/>
     <item
-        android:id="@+id/id_10006"
+        android:id="@+id/id_208"
         android:title="@string/alumbrado_p_blico"/>
     <item
         android:id="@+id/id_10007"

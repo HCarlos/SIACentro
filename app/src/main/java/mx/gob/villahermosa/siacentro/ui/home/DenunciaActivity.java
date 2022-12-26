@@ -54,6 +54,7 @@ import mx.gob.villahermosa.siacentro.databinding.ActivityDenunciaBinding;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Field;
 
 public class DenunciaActivity extends AppCompatActivity implements Callback<ComboResponse> {
     protected UserEntity userEntity;
@@ -65,7 +66,6 @@ protected String servicioId;
     protected String servicioTitulo;
     protected ImageView ivImageToSend;
     protected Bitmap imagenBitMapASubir;
-    protected String descripcionImageToSenjd;
     protected Button btnObtenerImagen;
     protected ImageButton btnRotateImagen;
     protected Button btnEnviarImagen;
@@ -225,23 +225,32 @@ protected String servicioId;
         String autoriza = userEntity.getToken();
         Funciones funciones = new Funciones();
         String image = funciones.base64String(imagenBitMapASubir);
-
+        String descripcionImageToSend = binding.descripcionImageToSend.toString();
         int user_id = userEntity.getUser_id();
+
+        String Ubicacion = funciones.getCompleteAddressString(context, Singleton.getLatitude(), Singleton.getLongitude());
+        String Marca = funciones.getDataPhone(context);
 
         Call<ComboResponse> call = ApiDenunciaAdapter.getApiService().denunciaSend(
                 "Bearer " + autoriza,
                 image,
-                descripcionImageToSenjd,
+                descripcionImageToSend,
                 "1",
                 servicioTitulo,
                 Singleton.getLatitude(),
                 Singleton.getLongitude(),
+                "ANDROID",
+                Marca,
+                1,
+                Ubicacion,
+                Ubicacion,
                 user_id
         );
         call.enqueue(this);
 
     }
 
+//                Singleton.getLongitude(),
 
     @Override
     public void onResponse(Call<ComboResponse> call, Response<ComboResponse> response) {

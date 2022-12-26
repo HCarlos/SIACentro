@@ -11,16 +11,21 @@ import retrofit2.http.POST;
 public interface ApiDenunciaServiceInterface {
 
     @FormUrlEncoded
-    @POST("denuncia/send")
+    @POST("denuncia/add")
     @Headers("Accept: application/json")
     Call<ComboResponse> denunciaSend(
             @Header("Authorization") String autoriza,
             @Field("imagen") String imagen,
-            @Field("descripcion") String descripcion,
+            @Field("denuncia") String descripcion,
             @Field("servicio_id") String servicio_id,
             @Field("servicio") String servicio,
             @Field("latitud") Double latitud,
             @Field("longitud") Double longitud,
+            @Field("tipo_mobile") String tipo_mobile,
+            @Field("marca_mobile") String marca_mobile,
+            @Field("ubicacion_id") int ubicacion_id,
+            @Field("ubicacion") String ubicacion,
+            @Field("ubicacion_google") String ubicacion_google,
             @Field("user_id") int user_id
     );
 

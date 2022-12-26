@@ -2,7 +2,7 @@
 
 git remote set-url origin https://github.com/HCarlos/SIACentro.git
 
-# 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
+# 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
 
 git config --global user.email "r0@tecnointel.mx"
 git config --global user.name "HCarlos"
@@ -18,11 +18,13 @@ git rm -r --cached .gitignore
 git rm -r --cached .gitattributes
 git rm -r --cached *.sh
 git rm -r --cached .idea
+git rm -r --cached /.idea
+git rm -r --cached /bin/.idea
 git rm -r --cached otros
 
 git add .
 
-git commit -m "SIACentro - A006 | Production"
+git commit -m "SIACentro - A007 | Production"
 
 git push -u origin master --force
 
