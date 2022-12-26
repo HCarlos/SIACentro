@@ -2,7 +2,7 @@
 
 git remote set-url origin https://github.com/HCarlos/SIACentro.git
 
-# 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
+# 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
 
 git config --global user.email "r0@tecnointel.mx"
 git config --global user.name "HCarlos"
