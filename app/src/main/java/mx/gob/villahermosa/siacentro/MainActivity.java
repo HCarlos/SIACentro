@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity  {
         });
 
         Permissions permisos = new Permissions(this, getApplicationContext());
-        if ( permisos.chechPermission(this) ){
+        if ( permisos.chechPermisoLatLong(this) ){
             GPSTracker gps = new GPSTracker(getApplicationContext());
             Location location = gps.getLocation();
             Singleton.setLatitude(location.getLatitude());

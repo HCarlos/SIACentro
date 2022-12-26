@@ -6,13 +6,16 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 //import androidx.navigation.NavController;
 //import androidx.navigation.ui.AppBarConfiguration;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,6 +26,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.telephony.SubscriptionManager;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -59,10 +64,10 @@ import retrofit2.http.Field;
 public class DenunciaActivity extends AppCompatActivity implements Callback<ComboResponse> {
     protected UserEntity userEntity;
     protected Context context;
-//    private AppBarConfiguration mAppBarConfiguration;
-protected ActivityDenunciaBinding binding;
-//    public NavController navController;
-protected String servicioId;
+    //    private AppBarConfiguration mAppBarConfiguration;
+    protected ActivityDenunciaBinding binding;
+    //    public NavController navController;
+    protected String servicioId;
     protected String servicioTitulo;
     protected ImageView ivImageToSend;
     protected Bitmap imagenBitMapASubir;
@@ -72,6 +77,7 @@ protected String servicioId;
     protected Uri photoURI;
     protected String photoPath;
     protected ProgressBar loading_image_send;
+    protected Permissions permisos;
 
 
     @Override
@@ -101,15 +107,14 @@ protected String servicioId;
             getSupportActionBar().setDisplayShowTitleEnabled(true);
             getSupportActionBar().setElevation(8);
         }
-        Permissions permisos = new Permissions(this, getApplicationContext());
-        if ( permisos.chechPermission(this) ){
+        permisos = new Permissions(this, getApplicationContext());
+        if (permisos.chechPermisoLatLong(this)) {
             GPSTracker gps = new GPSTracker(getApplicationContext());
             Location location = gps.getLocation();
             Singleton.setLatitude(location.getLatitude());
             Singleton.setLongitude(location.getLongitude());
-            Toast.makeText(getApplicationContext(), "Latitud : "+Singleton.getLatitude() + ",\n Longitud : " + Singleton.getLongitude(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Latitud : " + Singleton.getLatitude() + ",\n Longitud : " + Singleton.getLongitude(), Toast.LENGTH_SHORT).show();
         }
-
 
         ivImageToSend = (ImageView) findViewById(R.id.imageToSend);
         loading_image_send = (ProgressBar) findViewById(R.id.loadingImageToSend);
@@ -215,38 +220,48 @@ protected String servicioId;
             });
 
     public void enviarDatos(){
-        loading_image_send.setVisibility(View.VISIBLE);
-        btnObtenerImagen.setEnabled(false);
-        btnRotateImagen.setEnabled(false);
-        btnEnviarImagen.setEnabled(false);
+        if (imagenBitMapASubir != null){
+
+            loading_image_send.setVisibility(View.VISIBLE);
+            btnObtenerImagen.setEnabled(false);
+            btnRotateImagen.setEnabled(false);
+            btnEnviarImagen.setEnabled(false);
 //        IsIMage = false;
 
-        userEntity = UserDB.getUserFromId(1);
-        String autoriza = userEntity.getToken();
-        Funciones funciones = new Funciones();
-        String image = funciones.base64String(imagenBitMapASubir);
-        String descripcionImageToSend = binding.descripcionImageToSend.toString();
-        int user_id = userEntity.getUser_id();
+            userEntity = UserDB.getUserFromId(1);
+            String autoriza = userEntity.getToken();
+            Funciones funciones = new Funciones();
+            String image = funciones.base64String(imagenBitMapASubir);
+            String descripcionImageToSend = binding.descripcionImageToSend.getText().toString();
+            int user_id = userEntity.getUser_id();
 
-        String Ubicacion = funciones.getCompleteAddressString(context, Singleton.getLatitude(), Singleton.getLongitude());
-        String Marca = funciones.getDataPhone(context);
+            String Ubicacion = funciones.getCompleteAddressString(context, Singleton.getLatitude(), Singleton.getLongitude());
+            String Marca = permisos.getDataPhone(this, context);
 
-        Call<ComboResponse> call = ApiDenunciaAdapter.getApiService().denunciaSend(
-                "Bearer " + autoriza,
-                image,
-                descripcionImageToSend,
-                "1",
-                servicioTitulo,
-                Singleton.getLatitude(),
-                Singleton.getLongitude(),
-                "ANDROID",
-                Marca,
-                1,
-                Ubicacion,
-                Ubicacion,
-                user_id
-        );
-        call.enqueue(this);
+            if (! image.equals("") ) {
+                Call<ComboResponse> call = ApiDenunciaAdapter.getApiService().denunciaSend(
+                        "Bearer " + autoriza,
+                        image,
+                        descripcionImageToSend,
+                        "1",
+                        servicioTitulo,
+                        Singleton.getLatitude(),
+                        Singleton.getLongitude(),
+                        "ANDROID",
+                        Marca,
+                        1,
+                        Ubicacion,
+                        Ubicacion,
+                        user_id
+                );
+                call.enqueue(this);
+            }else{
+                Toast.makeText(context, "Imagen vacía", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(context, "Debe tomar una foto", Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 
@@ -261,10 +276,13 @@ protected String servicioId;
             int status = combo_response.getStatus();
 
             Toast.makeText(getApplicationContext(), combo_response.getMsg(), Toast.LENGTH_LONG).show();
+            if (status == 1)
+                onBackPressed();
 
         }
         loading_image_send.setVisibility(View.INVISIBLE);
         btnObtenerImagen.setEnabled(true);
+        btnRotateImagen.setEnabled(true);
         btnEnviarImagen.setEnabled(true);
 
     }
@@ -273,6 +291,7 @@ protected String servicioId;
     public void onFailure(Call<ComboResponse> call, Throwable t) {
         loading_image_send.setVisibility(View.INVISIBLE);
         btnObtenerImagen .setEnabled(true);
+        btnRotateImagen.setEnabled(true);
         btnEnviarImagen.setEnabled(true);
         Toast.makeText(getApplicationContext(),  t.getMessage(), Toast.LENGTH_LONG).show();
     }

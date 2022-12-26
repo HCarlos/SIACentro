@@ -10,10 +10,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
+import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
@@ -22,6 +25,9 @@ import java.util.List;
 import java.util.Locale;
 
 import mx.gob.villahermosa.siacentro.R;
+import mx.gob.villahermosa.siacentro.classes.Singleton;
+import mx.gob.villahermosa.siacentro.classes.controllers.GPSTracker;
+import mx.gob.villahermosa.siacentro.classes.controllers.Permissions;
 
 public class Funciones {
 
@@ -58,20 +64,5 @@ public class Funciones {
     }
 
 
-    public String getDataPhone(Context context) {
-        TelephonyManager tMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_NUMBERS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return "";
-        }
-        String mPhoneNumber = tMgr.getLine1Number();
-        return mPhoneNumber;
-    }
 
 }
