@@ -1,7 +1,11 @@
 package mx.gob.villahermosa.siacentro.classes.responses;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ComboResponse {
+    @SerializedName("status")
     public int status = 0;
+    @SerializedName("msg")
     public String msg = "";
 
     public int getStatus() {

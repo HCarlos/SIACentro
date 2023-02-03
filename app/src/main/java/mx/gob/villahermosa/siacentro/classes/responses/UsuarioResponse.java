@@ -1,13 +1,23 @@
 package mx.gob.villahermosa.siacentro.classes.responses;
 
+import com.google.gson.annotations.SerializedName;
+
 public class UsuarioResponse {
+    @SerializedName("status")
     public int status           = 0;
+    @SerializedName("msg")
     public String msg           = "";
+    @SerializedName("access_token")
     public String access_token  = "";
+    @SerializedName("token_type")
     public String token_type    = "Bearer";
+    @SerializedName("user")
     public UserResponse user = new UserResponse();
 
     public UsuarioResponse() { }
+
+
+
 
     public int getStatus() {
         return status;

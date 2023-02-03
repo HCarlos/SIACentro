@@ -1,16 +1,29 @@
 package mx.gob.villahermosa.siacentro.classes.responses;
 
+import com.google.gson.annotations.SerializedName;
+
 public class RegistryResponse {
+    @SerializedName("status")
     public int status = 0;
+    @SerializedName("msg")
     public String msg = "";
+    @SerializedName("access_token")
     public String access_token = "";
+    @SerializedName("token_type")
     public String token_type = "";
+    @SerializedName("username")
     public String username = "";
+    @SerializedName("password")
     public String password = "";
+    @SerializedName("email")
     public String email = "";
+    @SerializedName("ap_paterno")
     public String ap_paterno = "";
+    @SerializedName("ap_materno")
     public String ap_materno = "";
+    @SerializedName("nombre")
     public String nombre = "";
+    @SerializedName("domicilio")
     public String domicilio = "";
 
     public int getStatus() {

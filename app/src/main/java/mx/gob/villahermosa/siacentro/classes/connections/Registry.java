@@ -7,7 +7,7 @@ public class Registry {
     private static RegistryResponse registry_response = new RegistryResponse();
 
     // Singleton Usuario
-    private static Registry ourInstance = new Registry();
+    private static final Registry ourInstance = new Registry();
     static Registry getInstance() {
         return ourInstance;
     }

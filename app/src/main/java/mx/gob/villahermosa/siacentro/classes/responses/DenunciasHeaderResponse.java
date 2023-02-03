@@ -1,11 +1,16 @@
 package mx.gob.villahermosa.siacentro.classes.responses;
 
-import java.util.List;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 public class DenunciasHeaderResponse {
+    @SerializedName("status")
     protected int status = 0;
+    @SerializedName("msg")
     protected String msg = "";
-    protected List<DenunciasResponse> denuncias = null;
+    @SerializedName("denuncias")
+    protected ArrayList<DenunciasResponse> denuncias = null;
 
     public int getStatus() {
         return status;
@@ -23,11 +28,11 @@ public class DenunciasHeaderResponse {
         this.msg = msg;
     }
 
-    public List<DenunciasResponse> getDenuncias() {
+    public ArrayList<DenunciasResponse> getDenuncias() {
         return denuncias;
     }
 
-    public void setDenuncias(List<DenunciasResponse> denuncias) {
+    public void setDenuncias(ArrayList<DenunciasResponse> denuncias) {
         this.denuncias = denuncias;
     }
 }

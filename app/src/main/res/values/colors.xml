@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="purple_200">#822B30</color>
-    <color name="purple_500">#FFFFFF</color>
     <color name="purple_700">#56565A</color>
     <color name="teal_200">#8D712F</color>
     <color name="teal_700">#033333</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
     <color name="primary">#822B30</color>
     <color name="primaryDark">#822B30</color>
     <color name="secondary">#8D712F</color>
+    <color name="secondaryLight">#C3962D</color>
     <color name="gray">#56565A</color>
-    <color name="dark_gris">#3F3F42</color>
     <color name="grayfuerte">#38383A</color>
 </resources>

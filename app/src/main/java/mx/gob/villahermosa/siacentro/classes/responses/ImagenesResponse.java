@@ -1,17 +1,31 @@
 package mx.gob.villahermosa.siacentro.classes.responses;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ImagenesResponse {
+    @SerializedName("id")
     protected int id = 0;
+    @SerializedName("fecha")
     protected String fecha = "";
+    @SerializedName("filename")
     protected String filename = "";
+    @SerializedName("filename_png")
     protected String filename_png = "";
+    @SerializedName("filename_thum")
     protected String filename_thum = "";
+    @SerializedName("user_id")
     protected Integer user_id = 0;
+    @SerializedName("denunciamobile_id")
     protected Integer denunciamobile_id = 0;
+    @SerializedName("latitud")
     protected Double latitud = 0.00;
+    @SerializedName("longitud")
     protected Double longitud = 0.00;
+    @SerializedName("url")
     protected String url = "";
+    @SerializedName("url_png")
     protected String url_png = "";
+    @SerializedName("url_thumb")
     protected String url_thumb = "";
 
     public int getId() {

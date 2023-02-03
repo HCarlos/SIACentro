@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment"
-    android:background="@drawable/background"
+    android:background="@xml/background_image"
     android:orientation="vertical"
     >
 
@@ -55,117 +55,13 @@
         android:orientation="vertical"
     >
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/ll2"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintBaseline_toTopOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintEnd_toStartOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="parent"-->
-<!--            android:orientation="vertical"-->
-<!--            android:layout_marginBottom="200dp"-->
-<!--            >-->
-
-<!--            <ImageButton-->
-<!--                android:id="@+id/btnPrimary0"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="200dp"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_marginLeft="16dp"-->
-<!--                android:layout_marginRight="16dp"-->
-<!--                android:layout_marginBottom="8dp"-->
-<!--                android:background="@drawable/cardview_three"-->
-<!--                android:padding="3dp"-->
-<!--                android:contentDescription="@string/action_sign_in"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textSize="20sp"-->
-<!--                android:elevation="8dp"-->
-<!--                />-->
-
-<!--            <ImageButton-->
-<!--                android:id="@+id/btnPrimary1"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="200dp"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_marginLeft="16dp"-->
-<!--                android:layout_marginRight="16dp"-->
-<!--                android:layout_marginBottom="8dp"-->
-<!--                android:background="@drawable/cardview_three"-->
-<!--                android:padding="3dp"-->
-<!--                android:contentDescription="@string/action_sign_in"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textSize="20sp"-->
-<!--                android:elevation="8dp"-->
-<!--                />-->
-
-
-<!--            <ImageButton-->
-<!--                android:id="@+id/btnPrimary2"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="200dp"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_marginLeft="16dp"-->
-<!--                android:layout_marginRight="16dp"-->
-<!--                android:layout_marginBottom="8dp"-->
-<!--                android:background="@drawable/cardview_three"-->
-<!--                android:padding="3dp"-->
-<!--                android:contentDescription="@string/action_sign_in"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textSize="20sp"-->
-<!--                android:elevation="8dp"-->
-<!--                />-->
-
-<!--            <ImageButton-->
-<!--                android:id="@+id/btnPrimary3"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="200dp"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_marginLeft="16dp"-->
-<!--                android:layout_marginRight="16dp"-->
-<!--                android:layout_marginBottom="8dp"-->
-<!--                android:background="@drawable/cardview_three"-->
-<!--                android:padding="3dp"-->
-<!--                android:contentDescription="@string/action_sign_in"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textSize="20sp"-->
-<!--                android:elevation="8dp"-->
-<!--                />-->
-
-<!--            <ImageButton-->
-<!--                android:id="@+id/btnPrimary4"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="200dp"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_marginLeft="16dp"-->
-<!--                android:layout_marginRight="16dp"-->
-<!--                android:layout_marginBottom="8dp"-->
-<!--                android:background="@drawable/cardview_three"-->
-<!--                android:padding="3dp"-->
-<!--                android:contentDescription="@string/action_sign_in"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textSize="20sp"-->
-<!--                android:elevation="8dp"-->
-<!--                />-->
-
-
-<!--        </LinearLayout>-->
-
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMisDenuncias"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:padding="8dp"
-            />
-
-
-
-
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMisDenuncias"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:padding="8dp"
+        />
 
     </RelativeLayout>
 

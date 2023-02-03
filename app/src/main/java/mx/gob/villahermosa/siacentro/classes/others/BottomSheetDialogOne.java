@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import mx.gob.villahermosa.siacentro.R;
@@ -30,25 +32,6 @@ public class BottomSheetDialogOne extends BottomSheetDialogFragment {
         activity = this.getActivity();
         context = this.getContext();
 
-//        btnTomarFoto = (Button) v.findViewById(R.id.btnTomarFoto);
-//        btnSeleccionarFoto = (Button) v.findViewById(R.id.btnSeleccionarFoto);
-
-//        btnTomarFoto.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mListener.onButtonBSDClicked(1);
-//                dismiss();
-//            }
-//        });
-//
-//        btnSeleccionarFoto.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mListener.onButtonBSDClicked(2);
-//                dismiss();
-//            }
-//        });
-
         return v;
 
     }
@@ -58,12 +41,12 @@ public class BottomSheetDialogOne extends BottomSheetDialogFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
             mListener = (BottomSheetListener) context;
         }catch (ClassCastException e){
-            throw new ClassCastException(context.toString() + " fallo la Implementación del BottomSheet");
+            throw new ClassCastException(context + " fallo la Implementación del BottomSheet");
         }
     }
 }

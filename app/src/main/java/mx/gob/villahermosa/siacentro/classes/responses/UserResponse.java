@@ -1,43 +1,80 @@
 package mx.gob.villahermosa.siacentro.classes.responses;
 
+import com.google.gson.annotations.SerializedName;
+
 import mx.gob.villahermosa.siacentro.classes.responses.UsuarioResponse;
 
 public class UserResponse {
 
+    @SerializedName("id")
     public int id = 0;
+    @SerializedName("username")
     public String username = "";
+    @SerializedName("email")
     public String email = "";
+    @SerializedName("nombre")
     public String nombre = "";
+    @SerializedName("ap_paterno")
     public String ap_paterno = "";
+    @SerializedName("ap_materno")
     public String ap_materno = "";
+    @SerializedName("curp")
     public String curp = "";
+    @SerializedName("emails")
     public String emails = "";
+    @SerializedName("celulares")
     public String celulares = "";
+    @SerializedName("telefonos")
     public String telefonos = "";
+    @SerializedName("fecha_nacimiento")
     public String fecha_nacimiento = "";
+    @SerializedName("genero")
     public int genero = 0;
+    @SerializedName("root")
     public String root = "";
+    @SerializedName("filename")
     public String filename = "";
+    @SerializedName("filename_png")
     public String filename_png = "";
+    @SerializedName("filename_thumb")
     public String filename_thumb = "";
+    @SerializedName("admin")
     public Boolean admin = false;
+    @SerializedName("alumno")
     public Boolean alumno = false;
+    @SerializedName("delegado")
     public Boolean delegado = false;
+    @SerializedName("session_id")
     public int session_id = 0;
+    @SerializedName("status_user")
     public int status_user = 0;
+    @SerializedName("empresa_id")
     public int empresa_id = 0;
+    @SerializedName("ip")
     public String ip = "";
+    @SerializedName("host")
     public String host = "";
+    @SerializedName("logged")
     public String logged = "";
+    @SerializedName("logged_at")
     public String logged_at = "";
+    @SerializedName("logout_at")
     public String logout_at = "";
+    @SerializedName("email_verified_at")
     public String email_verified_at = "";
+    @SerializedName("created_at")
     public String created_at = "";
+    @SerializedName("updated_at")
     public String updated_at = "";
+    @SerializedName("user_mig_id")
     public int user_mig_id = 0;
+    @SerializedName("searchtext")
     public String searchtext = "";
+    @SerializedName("ubicacion_id")
     public int ubicacion_id = 0;
+    @SerializedName("imagen_id")
     public int imagen_id = 0;
+    @SerializedName("uuid")
     public String uuid = "";
 
 

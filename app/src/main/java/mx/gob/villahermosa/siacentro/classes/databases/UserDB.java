@@ -3,10 +3,7 @@ package mx.gob.villahermosa.siacentro.classes.databases;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
-import androidx.room.Query;
 import androidx.room.Room;
-
-import java.util.List;
 
 import mx.gob.villahermosa.siacentro.classes.Usuario;
 
@@ -15,11 +12,11 @@ public class UserDB {
     private static UserDB userDB;
     private static AppDatabase db;
     private static UserDao UserDAO;
+    @SuppressLint("StaticFieldLeak")
     public static Context context;
 
     private UserDB(Context context) {
-        Context appContext = context.getApplicationContext();
-        context = appContext;
+        context = context.getApplicationContext();
 
         db = Room.databaseBuilder(context, AppDatabase.class, "dbSIAC").
                 allowMainThreadQueries()

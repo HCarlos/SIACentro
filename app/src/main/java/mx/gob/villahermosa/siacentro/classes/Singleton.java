@@ -2,6 +2,13 @@ package mx.gob.villahermosa.siacentro.classes;
 
 import android.net.Uri;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+
+import mx.gob.villahermosa.siacentro.classes.responses.ImagenesResponse;
+import mx.gob.villahermosa.siacentro.classes.responses.RespuestasResponse;
+
 public class Singleton {
 
     private static String Denuncia = "";
@@ -17,6 +24,8 @@ public class Singleton {
     private static Uri UriData = null;
     public static final String access_token = "";
     public static int denuncia_id = 0;
+    protected static ArrayList<ImagenesResponse> imagenes = null;
+    protected static  ArrayList<RespuestasResponse> respuestas = null;
 
     private static Singleton ourInstance = new Singleton();
     static Singleton getInstance() {
@@ -96,4 +105,17 @@ public class Singleton {
     public static void setDenuncia_id(int denuncia_id) {
         Singleton.denuncia_id = denuncia_id;
     }
+
+    public static ArrayList<ImagenesResponse> getImagenes() { return imagenes; }
+
+    public static void setImagenes(ArrayList<ImagenesResponse> _imagenes) {
+        imagenes = _imagenes;
+    }
+
+    public static ArrayList<RespuestasResponse> getRespuestas() {
+        return respuestas;
+    }
+
+    public static void setRespuestas(ArrayList<RespuestasResponse> _respuestas) { respuestas = _respuestas; }
+
 }

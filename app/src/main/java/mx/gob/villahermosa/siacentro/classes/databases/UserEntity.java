@@ -1,6 +1,5 @@
 package mx.gob.villahermosa.siacentro.classes.databases;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -389,13 +388,12 @@ public class UserEntity {
                 return AppConfig.URL_HOME+"images/web/empty_user_male.png";
             }
         }else{
-            return AppConfig.URL_HOME+"storage/"+this.getRoot()+this.getFilename_png();
+            return AppConfig.URL_HOME+"storage/"+this.getRoot()+this.getFilename_thumb();
         }
     }
 
     public String getFullName() {
         return this.getAp_paterno()+" "+this.getAp_materno()+" "+this.getNombre();
     }
-
 
 }

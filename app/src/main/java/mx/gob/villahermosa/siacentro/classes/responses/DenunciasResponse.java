@@ -1,18 +1,31 @@
 package mx.gob.villahermosa.siacentro.classes.responses;
 
-import java.util.List;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 public class DenunciasResponse {
 
+    @SerializedName("id")
     protected int id = 0;
+    @SerializedName("denuncia")
     protected String denuncia = "";
+    @SerializedName("fecha")
     protected String fecha = "";
+    @SerializedName("latitud")
     protected Double latitud = 0.00;
+    @SerializedName("longitud")
     protected Double longitud = 0.00;
+    @SerializedName("ubicacion")
     protected String ubicacion = "";
+    @SerializedName("ubicacion_google")
     protected String ubicacion_google = "";
+    @SerializedName("servicio")
     protected String servicio = "";
-    protected List<ImagenesResponse> imagenes = null;
+    @SerializedName("imagenes")
+    protected ArrayList<ImagenesResponse> imagenes = null;
+    @SerializedName("respuestas")
+    protected ArrayList<RespuestasResponse> respuestas = null;
 
     public int getId() {
         return id;
@@ -66,9 +79,7 @@ public class DenunciasResponse {
         return ubicacion_google;
     }
 
-    public void setUbicacion_google(String ubicacion_google) {
-        this.ubicacion_google = ubicacion_google;
-    }
+    public void setUbicacion_google(String ubicacion_google) { this.ubicacion_google = ubicacion_google; }
 
     public String getServicio() {
         return servicio;
@@ -78,15 +89,12 @@ public class DenunciasResponse {
         this.servicio = servicio;
     }
 
-    public List<ImagenesResponse> getImagenes() {
-        return imagenes;
-    }
+    public ArrayList<ImagenesResponse> getImagenes() { return imagenes; }
 
-    public void setImagenes(List<ImagenesResponse> imagenes) {
-        this.imagenes = imagenes;
-    }
+    public void setImagenes(ArrayList<ImagenesResponse> imagenes) { this.imagenes = imagenes; }
 
+    public ArrayList<RespuestasResponse> getRespuestas() { return respuestas; }
 
-
+    public void setRespuestas(ArrayList<RespuestasResponse> respuestas) { this.respuestas = respuestas; }
 
 }

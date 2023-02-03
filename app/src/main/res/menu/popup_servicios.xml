@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
     <item
         android:id="@+id/id_207"
         android:title="@string/fuga_de_agua_potable" />
     <item
         android:id="@+id/id_261"
         android:title="@string/fuga_de_aguas_negras"/>
-<!--    <item-->
-<!--        android:id="@+id/id_10003"-->
-<!--        android:title="@string/alcantarilla_sin_tapa"/>-->
     <item
         android:id="@+id/id_269"
         android:title="@string/socav_n"/>

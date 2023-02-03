@@ -1,6 +1,7 @@
 package mx.gob.villahermosa.siacentro.classes.controllers;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -24,7 +25,9 @@ import java.util.Date;
 
 public class PhotoUtils {
 
+    @SuppressLint("StaticFieldLeak")
     private static Context mContext;
+    @SuppressLint("StaticFieldLeak")
     private static Activity activity;
     private BitmapFactory.Options generalOptions;
     private static String cameraFilePath;
@@ -32,18 +35,9 @@ public class PhotoUtils {
     private static final int
             PERMISSION_CODE = 1000,
             PERMISSION_CODE_2 = 2000,
-            IMAGE_CAPTURE_CODE = 1001,
             PERMISSION_CODE_GALLERY = 1002,
-            GALLERY_REQUEST_CODE=1003,
-            CAMERA_REQUEST_CODE=1004,
             PERMISSION_CODE_AUDIO = 1005,
-            AUDIO_REQUEST_CODE = 1006,
-            PERMISSION_CODE_VIDEO = 1007,
-            VIDEO_REQUEST_CODE = 1008,
-            PERMISSION_CODE_GALLERY_VIDEO = 1009,
-            GALLERY_VIDEO_REQUEST_CODE = 1010,
-            PERMISSION_CODE_DOC = 1011,
-            DOC_REQUEST_CODE = 1012;
+            PERMISSION_CODE_DOC = 1011;
 
 
 
@@ -71,7 +65,7 @@ public class PhotoUtils {
     public static File createImageFile(String part, String ext,
                                        Context myContext) throws IOException {
         cameraFilePath = "content";
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "devch_" + timeStamp + "_";
         File storageDir = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_DCIM), "Camera");
@@ -89,7 +83,7 @@ public class PhotoUtils {
     public static File createVideoFile(String part, String ext,
                                        Context myContext) throws IOException {
         cameraFilePath = "content";
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "devch_" + timeStamp + "_";
         File storageDir = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_DCIM), "Camera");
@@ -107,18 +101,16 @@ public class PhotoUtils {
         return cameraFilePath;
     }
 
-    public Bitmap getImage(Uri uri) {
+    public Bitmap getImage(Uri uri) throws IOException {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        InputStream is = null;
+        InputStream is;
         try {
             is = mContext.getContentResolver().openInputStream(uri);
             BitmapFactory.decodeStream(is, null, options);
             is.close();
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
             e.printStackTrace();
         }
         this.generalOptions = options;
@@ -147,7 +139,7 @@ public class PhotoUtils {
         if (sample <= 0) {
             sample = 1;
         }
-        options.inSampleSize = (int) sample;
+        options.inSampleSize = sample;
         options.inPurgeable = true;
         try {
             InputStream is;
@@ -157,10 +149,8 @@ public class PhotoUtils {
                 bitmap = Bitmap.createScaledBitmap(bitmap, dstWidth, dstHeight,
                         true);
             is.close();
-        } catch (OutOfMemoryError e) {
+        } catch (OutOfMemoryError | Exception e) {
             e.printStackTrace();
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
 
         return bitmap;
@@ -176,8 +166,8 @@ public class PhotoUtils {
 
 
     public static Boolean chechPermission1(Activity _activity) {
-        Boolean retorno = true;
-        Activity activity = _activity;
+        boolean retorno = true;
+        activity = _activity;
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
             if (activity.checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
@@ -191,8 +181,8 @@ public class PhotoUtils {
     }
 
     public static Boolean chechPermission2(Activity _activity) {
-        Boolean retorno = true;
-        Activity activity = _activity;
+        boolean retorno = true;
+        activity = _activity;
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
             if (activity.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
@@ -205,8 +195,8 @@ public class PhotoUtils {
     }
 
     public static Boolean chechPermission3(Activity _activity) {
-        Boolean retorno = true;
-        Activity activity = _activity;
+        boolean retorno = true;
+        activity = _activity;
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
             if (activity.checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED ||
@@ -220,8 +210,8 @@ public class PhotoUtils {
     }
 
     public static Boolean chechPermission4(Activity _activity) {
-        Boolean retorno = true;
-        Activity activity = _activity;
+        boolean retorno = true;
+        activity = _activity;
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
             if (activity.checkSelfPermission(Manifest.permission.INTERNET) == PackageManager.PERMISSION_DENIED ||
@@ -240,8 +230,8 @@ public class PhotoUtils {
     }
 
     public static Boolean chechPermission5(Activity _activity) {
-        Boolean retorno = true;
-        Activity activity = _activity;
+        boolean retorno = true;
+        activity = _activity;
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
             if (activity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
@@ -255,8 +245,8 @@ public class PhotoUtils {
     }
 
     public static Boolean chechPermission6(Activity _activity) {
-        Boolean retorno = true;
-        Activity activity = _activity;
+        boolean retorno = true;
+        activity = _activity;
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
             if (activity.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {

@@ -9,7 +9,9 @@
     android:paddingTop="@dimen/fragment_vertical_margin"
     android:paddingRight="@dimen/fragment_horizontal_margin"
     android:paddingBottom="@dimen/fragment_vertical_margin"
-    tools:context=".ui.usuario.IngresarFragment">
+    tools:context=".ui.usuario.IngresarFragment"
+    android:background="@xml/background_image"
+    >
 
     <LinearLayout
         android:id="@+id/SinLoguear"

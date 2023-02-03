@@ -7,7 +7,7 @@
     android:name=".PointsScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@xml/background_image"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     app:popupTheme="@style/Theme.SIACentro.PopupOverlay"

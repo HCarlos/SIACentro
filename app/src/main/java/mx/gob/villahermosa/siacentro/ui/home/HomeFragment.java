@@ -10,15 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.FragmentKt;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,17 +24,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
-import java.util.Objects;
 
 import mx.gob.villahermosa.siacentro.R;
-import mx.gob.villahermosa.siacentro.classes.Singleton;
 import mx.gob.villahermosa.siacentro.classes.databases.UserDB;
 import mx.gob.villahermosa.siacentro.classes.databases.UserEntity;
-import mx.gob.villahermosa.siacentro.classes.others.Funciones;
-import mx.gob.villahermosa.siacentro.classes.responses.ComboResponse;
 import mx.gob.villahermosa.siacentro.classes.responses.DenunciasHeaderResponse;
 import mx.gob.villahermosa.siacentro.classes.responses.DenunciasResponse;
-import mx.gob.villahermosa.siacentro.classes.responses.ImagenesResponse;
 import mx.gob.villahermosa.siacentro.data.adapters.ApiDenunciaAdapter;
 import mx.gob.villahermosa.siacentro.data.adapters.MisDenunciasAdapter;
 import mx.gob.villahermosa.siacentro.databinding.FragmentHomeBinding;
@@ -48,14 +40,11 @@ import retrofit2.Response;
 public class HomeFragment extends Fragment implements Callback<DenunciasHeaderResponse> {
 
     private List<DenunciasResponse> denuncias_response;
-    private ImagenesResponse imagenes_response;
     private FragmentHomeBinding binding;
     private UserEntity userEntity;
     private Context context;
-    private FragmentKt NavigationHostFragment;
-    private FloatingActionButton fab;
+    public FloatingActionButton fab;
     private View root;
-    private ImageView btnRefresh;
     private RecyclerView rvDenuncia;
 
 
@@ -66,7 +55,7 @@ public class HomeFragment extends Fragment implements Callback<DenunciasHeaderRe
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         root = binding.getRoot();
-        fab = (FloatingActionButton) root.findViewById(R.id.fab);
+        fab = requireActivity().findViewById(R.id.fab);
 
         return root;
     }
@@ -78,9 +67,9 @@ public class HomeFragment extends Fragment implements Callback<DenunciasHeaderRe
         this.context = view.getContext();
         UserDB.get(this.context);
 
-        this.mostrar_usuario_logeado(this.context);
+        fab = requireActivity().findViewById(R.id.fab);
 
-        fab = (FloatingActionButton) root.findViewById(R.id.fab);
+        this.mostrar_usuario_logeado(this.context);
 
     }
 
@@ -88,28 +77,26 @@ public class HomeFragment extends Fragment implements Callback<DenunciasHeaderRe
 
     public void mostrar_usuario_logeado(Context context){
 
-        context = requireContext().getApplicationContext();
         userEntity = UserDB.getUserFromId(1);
 
-        if (userEntity!= null) {
+
+        LinearLayout ll1 = binding.lnHrz;
+        RelativeLayout scv1 = binding.scroll1;
+        if  (userEntity != null) {
 
 
-            LinearLayout ll1 = binding.lnHrz;
-            RelativeLayout scv1 = binding.scroll1;
             ll1.setVisibility(View.VISIBLE);
             scv1.setVisibility(View.VISIBLE);
 
             LinearLayout llSinLogueo = binding.llSinLogueo;
             llSinLogueo.setVisibility(View.INVISIBLE);
 
-            if ( fab != null ) { fab.setVisibility(View.VISIBLE); };
+            if ( fab != null ) fab.setVisibility(View.VISIBLE);
 
             obtenerDenuncias();
 
 
         }else{
-            LinearLayout ll1 = binding.lnHrz;
-            RelativeLayout scv1 = binding.scroll1;
 
             ll1.setVisibility(View.INVISIBLE);
             scv1.setVisibility(View.INVISIBLE);
@@ -117,8 +104,8 @@ public class HomeFragment extends Fragment implements Callback<DenunciasHeaderRe
             LinearLayout llSinLogueo = binding.llSinLogueo;
             llSinLogueo.setVisibility(View.VISIBLE);
 
-            Button btnIngresar1 = (Button) binding.btnIngresar1;
-            Button btnRegistry1 = (Button) binding.btnRegistry1;
+            Button btnIngresar1 = binding.btnIngresar1;
+            Button btnRegistry1 = binding.btnRegistry1;
 
             Log.e("NAVIGATION", "UNO");
 
@@ -133,7 +120,7 @@ public class HomeFragment extends Fragment implements Callback<DenunciasHeaderRe
                 FragmentKt.findNavController(getParentFragment()).navigate(R.id.nav_registar);
             });
 
-            if ( fab != null ) { fab.setVisibility(View.VISIBLE); };
+            if (  fab != null ) fab.setVisibility(View.VISIBLE);
 
         }
 
@@ -167,12 +154,13 @@ public class HomeFragment extends Fragment implements Callback<DenunciasHeaderRe
     }
 
     @Override
-    public void onResponse(Call<DenunciasHeaderResponse> call, Response<DenunciasHeaderResponse> response) {
+    public void onResponse(@NonNull Call<DenunciasHeaderResponse> call, Response<DenunciasHeaderResponse> response) {
+
         if (response.isSuccessful()) {
 
             DenunciasHeaderResponse denuncia_header_response = response.body();
             assert denuncia_header_response != null;
-            int status = denuncia_header_response.getStatus();
+//            int status = denuncia_header_response.getStatus();
 
             denuncias_response = denuncia_header_response.getDenuncias();
 
@@ -184,14 +172,14 @@ public class HomeFragment extends Fragment implements Callback<DenunciasHeaderRe
 
     @Override
     public void onFailure(@NonNull Call<DenunciasHeaderResponse> call, Throwable t) {
-        Toast.makeText(context,  t.getMessage(), Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Código de Error => A9510 : " + t.getMessage(), Toast.LENGTH_LONG).show();
     }
 
     public void LlenarDatos(){
         LinearLayoutManager llm = new LinearLayoutManager(context);
         llm.setOrientation(VERTICAL);
         MisDenunciasAdapter adapter = new MisDenunciasAdapter(this.getActivity(),context,denuncias_response);
-        rvDenuncia = (RecyclerView) requireActivity().findViewById(R.id.rvMisDenuncias);
+        rvDenuncia = requireActivity().findViewById(R.id.rvMisDenuncias);
         rvDenuncia.setLayoutManager(llm);
         rvDenuncia.setAdapter(adapter);
 

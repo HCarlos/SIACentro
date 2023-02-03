@@ -9,11 +9,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,6 +22,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.MediaStore.Images;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -66,7 +66,6 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
 
     private UserEntity userEntity;
     public Context context;
-    private ActivityChangeAvatarBinding binding;
     public ProgressBar progress;
     public Button btnCambiarImagen;
     public ImageButton btnRotateImagen;
@@ -75,7 +74,6 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
     public Uri photoURI;
     public Uri selectedImage;
     private ImageView avatar;
-    private ProgressDialog dialog;
     private Boolean IsIMage;
     public String photoPath;
 
@@ -84,17 +82,17 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
         super.onCreate(savedInstanceState);
 
         userEntity = UserDB.getUserFromId(1);
-        binding = ActivityChangeAvatarBinding.inflate(getLayoutInflater());
+        mx.gob.villahermosa.siacentro.databinding.ActivityChangeAvatarBinding binding = ActivityChangeAvatarBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         this.context = getApplicationContext();
 
-        TextView txtTitulo = (TextView) binding.appBarMenu.txtTitulo;
+        TextView txtTitulo = binding.appBarMenu.txtTitulo;
         txtTitulo.setText(R.string.cambiar_avatar);
 
         setSupportActionBar(binding.appBarMenu.toolbar);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -109,24 +107,21 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
             Location location = gps.getLocation();
             Singleton.setLatitude(location.getLatitude());
             Singleton.setLongitude(location.getLongitude());
-            Toast.makeText(getApplicationContext(), "Latitud : "+Singleton.getLatitude() + ", Longitud : " + Singleton.getLongitude(), Toast.LENGTH_SHORT).show();
         }
 
 
 
-        avatar = (ImageView) findViewById(R.id.avatar);
+        avatar = findViewById(R.id.avatar);
 
-        progress = (ProgressBar) findViewById(R.id.loading_avatar);
-        btnCambiarImagen = (Button) findViewById(R.id.btnCallMenu);
+        progress = findViewById(R.id.loading_avatar);
+        btnCambiarImagen = findViewById(R.id.btnCallMenu);
         btnCambiarImagen.setOnClickListener(v -> showBottomSheetDialog());
 
-        btnRotateImagen = (ImageButton) findViewById(R.id.btnRotateImagen);
+        btnRotateImagen = findViewById(R.id.btnRotateImagen);
         btnRotateImagen.setVisibility(View.INVISIBLE);
-        btnRotateImagen.setOnClickListener(v -> {
-            rotarImagen(imagenBitMapASubir);
-        });
+        btnRotateImagen.setOnClickListener(v -> rotarImagen(imagenBitMapASubir));
 
-        btnSaveImagen = (Button) findViewById(R.id.btnSaveImabe);
+        btnSaveImagen = findViewById(R.id.btnSaveImabe);
         btnSaveImagen.setOnClickListener(v -> savePhoto());
         btnSaveImagen.setEnabled(false);
 
@@ -138,6 +133,7 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
 
 
 
+    @SuppressLint({"IntentReset", "QueryPermissionsNeeded"})
     private void showBottomSheetDialog() {
 
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
@@ -147,7 +143,7 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
         LinearLayout btnTomarFoto = bottomSheetDialog.findViewById(R.id.btnTomarFoto);
         LinearLayout btnSeleccionarFoto = bottomSheetDialog.findViewById(R.id.btnSeleccionarFoto);
 
-        btnTomarFoto.setOnClickListener(v -> {
+        Objects.requireNonNull(btnTomarFoto).setOnClickListener(v -> {
 
             photoURI = null;
             try {
@@ -163,16 +159,13 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
 
         });
 
-        btnSeleccionarFoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                gallery.setType("image/*");
-                if (gallery.resolveActivity(getPackageManager()) != null) {
-                    seleccionarFoto.launch(gallery);
-                }
-                bottomSheetDialog.dismiss();
+        Objects.requireNonNull(btnSeleccionarFoto).setOnClickListener(v -> {
+            @SuppressLint("IntentReset") Intent gallery = new Intent(Intent.ACTION_PICK, Images.Media.INTERNAL_CONTENT_URI);
+            gallery.setType("image/*");
+            if (gallery.resolveActivity(getPackageManager()) != null) {
+                seleccionarFoto.launch(gallery);
             }
+            bottomSheetDialog.dismiss();
         });
         bottomSheetDialog.show();
 
@@ -215,10 +208,10 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
         public void onActivityResult(ActivityResult result) {
             if (result.getResultCode() == Activity.RESULT_OK) {
                 Intent data = result.getData();
-                selectedImage = data.getData();
+                selectedImage = Objects.requireNonNull(data).getData();
                 String selectedPath=selectedImage.getPath();
                 if (selectedPath != null) {
-                    InputStream imageStream = null;
+                    InputStream imageStream;
                     try {
                         imageStream = getContentResolver().openInputStream(selectedImage);
                         Bitmap bmp = BitmapFactory.decodeStream(imageStream);
@@ -241,9 +234,9 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
     public String getRealPathFromURI(Context context, Uri contentUri) {
         Cursor cursor = null;
         try {
-            String[] proj = {MediaStore.Images.Media.DATA};
+            String[] proj = {Images.Media.DATA};
             cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            int column_index = cursor.getColumnIndexOrThrow(Images.Media.DATA);
             cursor.moveToFirst();
             return cursor.getString(column_index);
         } finally {
@@ -273,12 +266,11 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
 
 
     @Override
-    public void onResponse(Call<ComboResponse> call, Response<ComboResponse> response) {
+    public void onResponse(@NonNull Call<ComboResponse> call, Response<ComboResponse> response) {
         if (response.isSuccessful()) {
 
             ComboResponse combo_response = response.body();
             assert combo_response != null;
-            int status = combo_response.getStatus();
 
             showImage();
 
@@ -295,7 +287,7 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
     }
 
     @Override
-    public void onFailure(Call<ComboResponse> call, Throwable t) {
+    public void onFailure(@NonNull Call<ComboResponse> call, Throwable t) {
         progress .setVisibility(View.INVISIBLE);
         btnRotateImagen.setVisibility(View.INVISIBLE);
         btnCambiarImagen .setEnabled(true);
@@ -309,7 +301,6 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
     public void showImage(){
 
         String imageUri = userEntity.getURLImagenArchivo();
-//        avatar = (ImageView) findViewById(R.id.avatar);
 
         int dr = R.drawable.empty_user_female;
         if (this.userEntity.getGenero() == 1){
@@ -328,7 +319,7 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
 
     private File createImageFile() throws IOException {
         photoPath = null;
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "SIACentro_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
@@ -336,7 +327,7 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
                 ".png",         /* suffix */
                 storageDir      /* directory */
         );
-        photoPath  = image.getAbsolutePath();;
+        photoPath  = image.getAbsolutePath();
         Log.w("NOMBRE_ARCHIVO",photoPath);
         return image;
     }
@@ -350,13 +341,7 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
-            case 1234:
-                if(grantResults[0]== PackageManager.PERMISSION_GRANTED && grantResults[1]==PackageManager.PERMISSION_GRANTED){
-                // Do_SOme_Operation();
-            }
-            default:super.onRequestPermissionsResult(requestCode,permissions,grantResults);
-        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
 

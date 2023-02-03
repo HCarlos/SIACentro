@@ -1,5 +1,6 @@
 package mx.gob.villahermosa.siacentro.ui.usuario;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
@@ -10,8 +11,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -29,7 +28,6 @@ import mx.gob.villahermosa.siacentro.classes.others.SiacDialogBasicFragment;
 import mx.gob.villahermosa.siacentro.classes.responses.ComboResponse;
 import mx.gob.villahermosa.siacentro.data.adapters.ApiAdapter;
 import mx.gob.villahermosa.siacentro.databinding.ActivityChangePasswordBinding;
-import mx.gob.villahermosa.siacentro.databinding.ActivityProfileBinding;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,12 +58,12 @@ public class ChangePasswordActivity extends AppCompatActivity implements Callbac
         binding = ActivityChangePasswordBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        TextView txtTitulo = (TextView) binding.appBarMenu.txtTitulo;
+        TextView txtTitulo = binding.appBarMenu.txtTitulo;
         txtTitulo.setText(R.string.cambiar_password);
 
         setSupportActionBar(binding.appBarMenu.toolbar);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -77,27 +75,21 @@ public class ChangePasswordActivity extends AppCompatActivity implements Callbac
 
         btnChnangePassword = binding.btnChangePassword;
 
-        btnChnangePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnChnangePassword.setOnClickListener(v -> {
 //                loading_change_paword.setVisibility(View.VISIBLE);
-                pas1 = binding.password1.getText().toString().trim();
-                pas2 = binding.password2.getText().toString().trim();
-                pas3 = binding.password3.getText().toString().trim();
-                if (Validate()) {
-                    DialogAlertConfirm d = new DialogAlertConfirm(ChangePasswordActivity.this, context);
-                    AlertDialog ad = d.confirm("Desea continuar?\n\nEste cambio es irreversible.\n\n");
-                    ad.show();
-                    ad.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            sendData();
-                            ad.dismiss();
-                        }
-                    });
-                }
-
+            pas1 = binding.password1.getText().toString().trim();
+            pas2 = binding.password2.getText().toString().trim();
+            pas3 = binding.password3.getText().toString().trim();
+            if (Validate()) {
+                DialogAlertConfirm d = new DialogAlertConfirm(ChangePasswordActivity.this, context);
+                AlertDialog ad = d.confirm("Desea continuar?\n\nEste cambio es irreversible.\n\n");
+                ad.show();
+                ad.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(v1 -> {
+                    sendData();
+                    ad.dismiss();
+                });
             }
+
         });
     }
 
@@ -139,7 +131,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements Callbac
 
 
     @Override
-    public void onResponse(Call<ComboResponse> call, Response<ComboResponse> response) {
+    public void onResponse(@NonNull Call<ComboResponse> call, Response<ComboResponse> response) {
         if (response.isSuccessful()) {
 
             ComboResponse combo_response = response.body();
@@ -157,10 +149,10 @@ public class ChangePasswordActivity extends AppCompatActivity implements Callbac
     }
 
     @Override
-    public void onFailure(Call<ComboResponse> call, Throwable t) {
+    public void onFailure(@NonNull Call<ComboResponse> call, Throwable t) {
         loading_change_paword.setVisibility(View.INVISIBLE);
         btnChnangePassword .setEnabled(true);
-        Toast.makeText(getApplicationContext(),  t.getMessage(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),  "Código de Error => A7496 : " + t.getMessage(), Toast.LENGTH_LONG).show();
     }
 
 

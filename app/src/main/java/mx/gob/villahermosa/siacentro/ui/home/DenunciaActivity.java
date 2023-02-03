@@ -4,30 +4,24 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
-//import androidx.navigation.NavController;
-//import androidx.navigation.ui.AppBarConfiguration;
 
-import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-//import android.graphics.Color;
 import android.graphics.Matrix;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.telephony.SubscriptionManager;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -52,21 +46,16 @@ import mx.gob.villahermosa.siacentro.classes.databases.UserDB;
 import mx.gob.villahermosa.siacentro.classes.databases.UserEntity;
 import mx.gob.villahermosa.siacentro.classes.others.Funciones;
 import mx.gob.villahermosa.siacentro.classes.responses.ComboResponse;
-//import mx.gob.villahermosa.siacentro.data.adapters.ApiAdapter;
 import mx.gob.villahermosa.siacentro.data.adapters.ApiDenunciaAdapter;
 import mx.gob.villahermosa.siacentro.databinding.ActivityDenunciaBinding;
-//import mx.gob.villahermosa.siacentro.databinding.ActivityProfileBinding;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Field;
 
 public class DenunciaActivity extends AppCompatActivity implements Callback<ComboResponse> {
     protected UserEntity userEntity;
     protected Context context;
-    //    private AppBarConfiguration mAppBarConfiguration;
     protected ActivityDenunciaBinding binding;
-    //    public NavController navController;
     protected String servicioId;
     protected String servicioTitulo;
     protected ImageView ivImageToSend;
@@ -87,7 +76,7 @@ public class DenunciaActivity extends AppCompatActivity implements Callback<Comb
 
         Bundle bundle = getIntent().getExtras();
         servicioId = bundle.getString("menu_id");
-        servicioTitulo = (String) bundle.getString("menu_title");
+        servicioTitulo = bundle.getString("menu_title");
 
         this.context = getApplicationContext();
 
@@ -95,12 +84,12 @@ public class DenunciaActivity extends AppCompatActivity implements Callback<Comb
         binding = ActivityDenunciaBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        TextView txtTitulo = (TextView) binding.appBarDenuncia.txtTitulo;
+        TextView txtTitulo = binding.appBarDenuncia.txtTitulo;
         txtTitulo.setText(servicioTitulo);
 
         setSupportActionBar(binding.appBarDenuncia.toolbardenuncia);
 
-        Toolbar toolbar = (Toolbar) findViewById(binding.appBarDenuncia.toolbardenuncia.getId());
+        Toolbar toolbar = findViewById(binding.appBarDenuncia.toolbardenuncia.getId());
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -116,24 +105,19 @@ public class DenunciaActivity extends AppCompatActivity implements Callback<Comb
             Toast.makeText(getApplicationContext(), "Latitud : " + Singleton.getLatitude() + ",\n Longitud : " + Singleton.getLongitude(), Toast.LENGTH_SHORT).show();
         }
 
-        ivImageToSend = (ImageView) findViewById(R.id.imageToSend);
-        loading_image_send = (ProgressBar) findViewById(R.id.loadingImageToSend);
+        ivImageToSend = findViewById(R.id.imageToSend);
+        loading_image_send = findViewById(R.id.loadingImageToSend);
         loading_image_send.setVisibility(View.GONE);
 
-        btnRotateImagen = (ImageButton) binding.btnRotateImagen;
+        btnRotateImagen = binding.btnRotateImagen;
         btnRotateImagen.setVisibility(View.GONE);
         btnRotateImagen.setOnClickListener(v -> rotarImagen(imagenBitMapASubir));
 
-        btnObtenerImagen = (Button) binding.btnObtenerImagenDen;
-        btnObtenerImagen.setOnClickListener(v -> getObtenerImagenDesdeLaCamara(v));
+        btnObtenerImagen = binding.btnObtenerImagenDen;
+        btnObtenerImagen.setOnClickListener(this::getObtenerImagenDesdeLaCamara);
 
-        btnEnviarImagen = (Button) binding.btnImageToSend;
-        btnEnviarImagen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                enviarDatos();
-            }
-        });
+        btnEnviarImagen = binding.btnImageToSend;
+        btnEnviarImagen.setOnClickListener(v -> enviarDatos());
 
 
 
@@ -164,7 +148,7 @@ public class DenunciaActivity extends AppCompatActivity implements Callback<Comb
 
     private File createImageFile() throws IOException {
         photoPath = null;
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "SIACentro_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
@@ -172,7 +156,7 @@ public class DenunciaActivity extends AppCompatActivity implements Callback<Comb
                 ".png",         /* suffix */
                 storageDir      /* directory */
         );
-        photoPath  = image.getAbsolutePath();;
+        photoPath  = image.getAbsolutePath();
         Log.w("NOMBRE_ARCHIVO",photoPath);
         return image;
     }
@@ -188,7 +172,6 @@ public class DenunciaActivity extends AppCompatActivity implements Callback<Comb
             }
         } catch (IOException ignore) {
         }
-//        bottomSheetDialog.dismiss();
 
     }
 
@@ -268,7 +251,7 @@ public class DenunciaActivity extends AppCompatActivity implements Callback<Comb
 //                Singleton.getLongitude(),
 
     @Override
-    public void onResponse(Call<ComboResponse> call, Response<ComboResponse> response) {
+    public void onResponse(@NonNull Call<ComboResponse> call, Response<ComboResponse> response) {
         if (response.isSuccessful()) {
 
             ComboResponse combo_response = response.body();
@@ -288,12 +271,12 @@ public class DenunciaActivity extends AppCompatActivity implements Callback<Comb
     }
 
     @Override
-    public void onFailure(Call<ComboResponse> call, Throwable t) {
+    public void onFailure(@NonNull Call<ComboResponse> call, Throwable t) {
         loading_image_send.setVisibility(View.INVISIBLE);
         btnObtenerImagen .setEnabled(true);
         btnRotateImagen.setEnabled(true);
         btnEnviarImagen.setEnabled(true);
-        Toast.makeText(getApplicationContext(),  t.getMessage(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),  "Código de Error => A1258 : " + t.getMessage(), Toast.LENGTH_LONG).show();
     }
 
     @Override

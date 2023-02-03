@@ -13,6 +13,13 @@
 /captures
 /otros
 otros/
+/app/release
+/app/firma
+app/release
+app/firma
+app/release/
+app/firma/
+
 .externalNativeBuild
 .cxx
 local.properties

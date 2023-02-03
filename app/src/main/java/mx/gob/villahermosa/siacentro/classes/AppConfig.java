@@ -15,10 +15,10 @@ public class AppConfig {
     public static String LOGIN = URL_HOME_API;
     public static String LOGOUT = URL_HOME_API + "logout";
 
+    public static String LOGIN_VOLLEY = URL_HOME_API + "login";
 
-//    public static String getURLImagenArchivo(){
-//        return URL_MEDIA + Singleton.getArchivo();
-//    };
+    public static String URL_ABOUT = URL_HOME + "about_app";
 
+    public static String URL_AVISO_PRIVACIDAD = URL_HOME + "aviso_app";
 
 }

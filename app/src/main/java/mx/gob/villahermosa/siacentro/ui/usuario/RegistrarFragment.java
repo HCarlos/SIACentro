@@ -17,14 +17,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.RadioGroup;
 
 import mx.gob.villahermosa.siacentro.R;
 import mx.gob.villahermosa.siacentro.classes.Singleton;
 import mx.gob.villahermosa.siacentro.classes.connections.Registry;
 import mx.gob.villahermosa.siacentro.classes.responses.RegistryResponse;
 import mx.gob.villahermosa.siacentro.classes.databases.UserDB;
-import mx.gob.villahermosa.siacentro.classes.databases.UserEntity;
 import mx.gob.villahermosa.siacentro.classes.others.SiacDialogBasicFragment;
 import mx.gob.villahermosa.siacentro.data.adapters.ApiAdapter;
 import mx.gob.villahermosa.siacentro.databinding.FragmentRegistrarBinding;
@@ -34,7 +32,6 @@ import retrofit2.Response;
 
 public class RegistrarFragment extends Fragment implements Callback<RegistryResponse> {
 
-    private UserEntity userEntity;
     private FragmentRegistrarBinding binding;
     public Context context;
     public FragmentManager fragmentManager;
@@ -52,12 +49,7 @@ public class RegistrarFragment extends Fragment implements Callback<RegistryResp
 
         context = getContext();
 
-        View root = binding.getRoot();
-
-        userEntity = UserDB.getUserFromId(1);
-
-
-        return root;
+        return binding.getRoot();
 
     }
 
@@ -115,7 +107,7 @@ public class RegistrarFragment extends Fragment implements Callback<RegistryResp
                 onErrorResponse(msg);
             }else{
                 Log.d("RegistroOk", msg);
-                NavigationHostFragment.findNavController(this).navigate(R.id.nav_home);
+                FragmentKt.findNavController(this).navigate(R.id.nav_home);
             }
         }
 

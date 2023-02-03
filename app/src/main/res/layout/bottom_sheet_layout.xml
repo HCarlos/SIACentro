@@ -37,7 +37,7 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_baseline_featured_play_list_24"
+            android:src="@drawable/ic_menu_camera"
             android:layout_margin="8dp"/>
 
         <TextView

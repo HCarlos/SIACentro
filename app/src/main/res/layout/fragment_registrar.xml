@@ -10,6 +10,7 @@
     android:paddingTop="@dimen/fragment_vertical_margin"
     android:paddingRight="@dimen/fragment_horizontal_margin"
     android:paddingBottom="@dimen/fragment_vertical_margin"
+    android:background="@xml/background_image"
     tools:context=".ui.usuario.RegistrarFragment"
     >
 
@@ -60,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:autofillHints="username"
-                    android:hint="@string/prompt_email"
+                    android:hint="@string/prompt_curp"
                     android:inputType="textAutoComplete"
                     android:selectAllOnFocus="true"
                     android:textColorHint="@color/white"

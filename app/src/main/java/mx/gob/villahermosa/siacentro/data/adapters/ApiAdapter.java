@@ -1,5 +1,7 @@
 package mx.gob.villahermosa.siacentro.data.adapters;
 
+import java.util.concurrent.TimeUnit;
+
 import mx.gob.villahermosa.siacentro.classes.AppConfig;
 import mx.gob.villahermosa.siacentro.data.interfaces.ApiLoginServiceInterface;
 import okhttp3.OkHttpClient;
@@ -20,7 +22,7 @@ public class ApiAdapter {
     /**
      * Default constructor
      */
-    private static final String BASE_URL = Conn.LOGIN;
+    private static final String BASE_URL = AppConfig.LOGIN;
 
     public static ApiLoginServiceInterface getApiService() {
 
@@ -30,6 +32,9 @@ public class ApiAdapter {
 
         // Asociamos el interceptor a las peticiones
         final OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.connectTimeout(30, TimeUnit.SECONDS);
+        httpClient.writeTimeout(30, TimeUnit.SECONDS);
+        httpClient.readTimeout(30, TimeUnit.SECONDS);
         httpClient.addInterceptor(logging);
 
         if (API_SERVICE == null) {

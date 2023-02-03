@@ -10,7 +10,7 @@ public class Usuario  {
     private static UserResponse user = new UserResponse();
 
     // Singleton Usuario
-    private static Usuario ourInstance = new Usuario();
+    private static final Usuario ourInstance = new Usuario();
     static Usuario getInstance() {
         return ourInstance;
     }

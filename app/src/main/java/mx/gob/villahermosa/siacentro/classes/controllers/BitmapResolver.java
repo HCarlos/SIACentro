@@ -15,7 +15,6 @@ import java.io.IOException;
 public class BitmapResolver {
 
 
-    @SuppressWarnings("deprecation")
     private static Bitmap getBitmapLegacy(@NonNull ContentResolver contentResolver, @NonNull Uri fileUri){
         Bitmap bitmap = null;
 

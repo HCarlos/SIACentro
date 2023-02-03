@@ -8,24 +8,35 @@
     android:layout_marginBottom="8dp"
     app:cardCornerRadius="8sp"
     card_view:contentPadding="16dp"
-    card_view:cardElevation="16dp"
+    card_view:cardElevation="4dp"
     android:padding="8dp"
+    android:orientation="vertical"
     >
+
+    <LinearLayout
+        android:id="@+id/hzbarmaster"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="bottom"
+        android:background="@drawable/cardview_two"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/llProfile"
+        >
 
     <LinearLayout
         android:id="@+id/llProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
-        android:background="@drawable/cardview_two"
-        android:elevation="8dp"
+        android:elevation="4dp"
         android:gravity="start"
         android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
 
         <ImageView
@@ -52,7 +63,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/den_filename"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="8dp"
 
             >
 
@@ -90,11 +101,106 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:textSize="9sp"
+                android:textSize="11sp"
+                android:textColor="@color/material_dynamic_primary0" />
+
+            <TextView
+                android:id="@+id/tvLatLoc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textSize="11sp"
                 android:textColor="@color/material_dynamic_primary0" />
 
         </LinearLayout>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/hzbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="#E0E0E0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/llProfile"
+        android:padding="4dp"
+        >
+
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnAddImages"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/icons_add_image_64"
+                android:gravity="start"
+                android:contentDescription="@string/agregar_imagen"
+                />
+
+            <TextView
+                android:id="@+id/txtTotalImages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clickable="false"
+                app:layout_constraintTop_toTopOf="@id/btnAddImages"
+                android:text="@string/N_ima_genes"
+                android:textSize="11sp"
+                android:textColor="@color/black"
+                />
+
+        </LinearLayout>
+
+
+        <android.widget.Space
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            />
+
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginEnd="4dp">
+
+            <ImageButton
+                android:id="@+id/btnAddComments"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/icons_comments_64"
+                android:gravity="end"
+                android:contentDescription="@string/agregar_comentario"
+                />
+
+
+            <TextView
+                android:id="@+id/txtTotalComments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clickable="false"
+                app:layout_constraintTop_toTopOf="@id/btnAddImages"
+                android:text="@string/N_comentarios"
+                android:textSize="11sp"
+                android:textColor="@color/black"
+                />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

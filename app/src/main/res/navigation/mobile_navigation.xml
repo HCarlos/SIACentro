@@ -27,17 +27,19 @@
         />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="mx.gob.villahermosa.siacentro.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery"
-        />
-
-    <fragment
         android:id="@+id/nav_about"
         android:name="mx.gob.villahermosa.siacentro.ui.about.AboutFragment"
         android:label="@string/menu_about"
         tools:layout="@layout/fragment_about"
         />
+
+    <fragment
+        android:id="@+id/nav_aviso"
+        android:name="mx.gob.villahermosa.siacentro.ui.about.AvisoFragment"
+        android:label="Aviso de Privacidad"
+        tools:layout="@layout/fragment_aviso"
+        />
+
+
 
 </navigation>
