@@ -40,16 +40,17 @@
 
     <string name="fuga_de_agua_potable">FUGA DE AGUA POTABLE</string>
     <string name="fuga_de_aguas_negras">ALCANTARILLADO / AGUAS NEGRAS</string>
-    <string name="socav_n">SOCAVON / HUNDIMIENTO</string>
-    <string name="reparaci_n_calles_bacheo">REPARACION DE CALLES (BACHEO)</string>
+    <string name="socav_n">SOCAVÓN / HUNDIMIENTO</string>
+    <string name="reparaci_n_calles_bacheo">REPARACIÓN DE CALLES (BACHEO)</string>
     <string name="alumbrado_p_blico">ALUMBRADO PÚBLICO</string>
     <string name="recolecci_n_de_basura">RECOLECCIÓN DE BASURA</string>
-    <string name="Versión">Release v1.4</string>
+    <string name="Versión">Release v2.2</string>
     <string name="aviso_de_privacidad">Aviso de Privacidad</string>
     <string name="agregar_imagen">Agregar imagen</string>
     <string name="agregar_comentario">Agregar comentario</string>
     <string name="N_ima_genes">0 Imaágenes</string>
     <string name="N_comentarios">0 Comentarios</string>
+    <string name="msg_token_fmt">AAAAiq0Ovmw</string>
 
 
 </resources>

@@ -28,6 +28,7 @@ import mx.gob.villahermosa.siacentro.classes.responses.DenunciasResponse;
 import mx.gob.villahermosa.siacentro.classes.responses.ImagenesResponse;
 import mx.gob.villahermosa.siacentro.classes.responses.RespuestasResponse;
 import mx.gob.villahermosa.siacentro.ui.home.ImagesActivity;
+import mx.gob.villahermosa.siacentro.ui.home.RespuestasActivity;
 
 public class MisDenunciasAdapter extends RecyclerView.Adapter<MisDenunciasAdapter.DenunciaViewHolder> {
     private final List<DenunciasResponse> DR;
@@ -98,23 +99,20 @@ public class MisDenunciasAdapter extends RecyclerView.Adapter<MisDenunciasAdapte
             public void onClick(View view) {
                 Intent intent = new Intent(activity, ImagesActivity.class);
                 Singleton.setImagenes(dr.getImagenes());
-
                 intent.putExtra("denuncia_id", dr.getId());
                 Singleton.setDenuncia_id(dr.getId());
                 activity.startActivity(intent);
-//                Toast.makeText(activity, "hola images "+dr.getId(), Toast.LENGTH_SHORT).show();
             }
         });
 
         holder.btnAddComments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Singleton.setIdArchivo(holder.data);
-//                Intent intent = new Intent(activity, WebViewActivity.class);
-//                intent.putExtra("Url", holder.Url );
-//                intent.putExtra("Extension", holder.Extension );
-//                activity.startActivity(intent);
-                Toast.makeText(activity, "hola message", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(activity, RespuestasActivity.class);
+                Singleton.setRespuestas(dr.getRespuestas());
+                intent.putExtra("denuncia_id", dr.getId());
+                Singleton.setDenuncia_id(dr.getId());
+                activity.startActivity(intent);
             }
         });
 

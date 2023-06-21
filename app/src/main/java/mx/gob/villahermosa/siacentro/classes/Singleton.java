@@ -24,6 +24,10 @@ public class Singleton {
     private static Uri UriData = null;
     public static final String access_token = "";
     public static int denuncia_id = 0;
+
+    private static String deviceToken = "";
+    private static String device_name = "";
+
     protected static ArrayList<ImagenesResponse> imagenes = null;
     protected static  ArrayList<RespuestasResponse> respuestas = null;
 
@@ -104,6 +108,22 @@ public class Singleton {
 
     public static void setDenuncia_id(int denuncia_id) {
         Singleton.denuncia_id = denuncia_id;
+    }
+
+    public static String getDeviceToken() {
+        return deviceToken;
+    }
+
+    public static void setDeviceToken(String deviceToken) {
+        Singleton.deviceToken = deviceToken;
+    }
+
+    public static String getDevice_name() {
+        return device_name;
+    }
+
+    public static void setDevice_name(String device_name) {
+        Singleton.device_name = device_name;
     }
 
     public static ArrayList<ImagenesResponse> getImagenes() { return imagenes; }

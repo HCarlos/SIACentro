@@ -1,23 +1,34 @@
 package mx.gob.villahermosa.siacentro;
 
+import static android.content.ContentValues.TAG;
+
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -27,8 +38,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import mx.gob.villahermosa.siacentro.classes.Singleton;
-import mx.gob.villahermosa.siacentro.classes.controllers.GPSTracker;
 import mx.gob.villahermosa.siacentro.classes.controllers.Permissions;
+import mx.gob.villahermosa.siacentro.classes.controllers.Utilidades;
 import mx.gob.villahermosa.siacentro.classes.databases.UserDB;
 import mx.gob.villahermosa.siacentro.classes.databases.UserEntity;
 import mx.gob.villahermosa.siacentro.databinding.ActivityMainBinding;
@@ -46,6 +57,16 @@ public class MainActivity extends AppCompatActivity  {
     public NavController navController;
     public FloatingActionButton fab;
     public UserEntity userentity;
+
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    // FCM SDK (and your app) can post notifications.
+                } else {
+                    // TODO: Inform user that that your app will not show notifications.
+                }
+            });
+
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -118,10 +139,9 @@ public class MainActivity extends AppCompatActivity  {
 
         Permissions permisos = new Permissions(this, getApplicationContext());
         if ( permisos.chechPermisoLatLong(this) ){
-            GPSTracker gps = new GPSTracker(getApplicationContext());
-            Location location = gps.getLocation();
-            Singleton.setLatitude(location.getLatitude());
-            Singleton.setLongitude(location.getLongitude());
+
+            Utilidades.getLocation(this, getApplicationContext());
+
         }else{
             Toast.makeText(getApplicationContext(), "No se ha dado permiso a la Geolocalización", Toast.LENGTH_SHORT).show();
         }
@@ -132,7 +152,57 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
+
+
+
+        askNotificationPermission();
+
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+
+                        Singleton.setDeviceToken(token);
+
+                        // Log and toast
+                        //String msg = getString(R.string.msg_token_fmt, token);
+                        Log.d(TAG, token);
+                        // Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
     }
+
+
+    private void askNotificationPermission() {
+        // This is only necessary for API level >= 33 (TIRAMISU)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                    PackageManager.PERMISSION_GRANTED) {
+                // FCM SDK (and your app) can post notifications.
+            } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                // TODO: display an educational UI explaining to the user the features that will be enabled
+                //       by them granting the POST_NOTIFICATION permission. This UI should provide the user
+                //       "OK" and "No thanks" buttons. If the user selects "OK," directly request the permission.
+                //       If the user selects "No thanks," allow the user to continue without notifications.
+            } else {
+                // Directly ask for the permission
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+            }
+        }
+    }
+
+
+
 
 
     @Nullable
@@ -223,6 +293,7 @@ public class MainActivity extends AppCompatActivity  {
                 return true;
 //        }
     }
+
 
 
 

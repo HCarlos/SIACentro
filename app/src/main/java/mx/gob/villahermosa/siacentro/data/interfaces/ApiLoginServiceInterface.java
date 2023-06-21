@@ -32,7 +32,9 @@ public interface ApiLoginServiceInterface {
     @POST("login")
     Call<UsuarioResponse> getLogin(
             @Field("username") String username,
-            @Field("password") String password
+            @Field("password") String password,
+            @Field("deviceToken") String deviceToken,
+            @Field("device_name") String marca
     );
 
     @FormUrlEncoded
@@ -45,7 +47,8 @@ public interface ApiLoginServiceInterface {
             @Field("email") String email,
             @Field("domicilio") String domicilio,
             @Field("genero") Integer genero,
-            @Field("device_name") String device_name
+            @Field("device_name") String device_name,
+            @Field("deviceToken") String deviceToken
 
     );
 

@@ -7,12 +7,15 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,6 +35,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
@@ -47,9 +53,9 @@ import java.util.Objects;
 
 import mx.gob.villahermosa.siacentro.R;
 import mx.gob.villahermosa.siacentro.classes.Singleton;
-import mx.gob.villahermosa.siacentro.classes.controllers.GPSTracker;
 import mx.gob.villahermosa.siacentro.classes.controllers.Permissions;
 import mx.gob.villahermosa.siacentro.classes.controllers.PhotoUtils;
+import mx.gob.villahermosa.siacentro.classes.controllers.Utilidades;
 import mx.gob.villahermosa.siacentro.classes.databases.UserDB;
 import mx.gob.villahermosa.siacentro.classes.databases.UserEntity;
 import mx.gob.villahermosa.siacentro.classes.others.Funciones;
@@ -89,7 +95,6 @@ public class AddImageActivity extends AppCompatActivity implements Callback<Comb
 
         denuncia_id = Singleton.getDenuncia_id();
 
-
         TextView txtTitulo = binding.appBarMenu.txtTitulo;
         txtTitulo.setText(String.format("Agregar Imagen al folio: %d", denuncia_id));
         txtTitulo.setTextSize(16);
@@ -107,10 +112,9 @@ public class AddImageActivity extends AppCompatActivity implements Callback<Comb
         Permissions permisos = new Permissions(this, getApplicationContext());
 
         if ( permisos.chechPermission(this) ){
-            GPSTracker gps = new GPSTracker(getApplicationContext());
-            Location location = gps.getLocation();
-            Singleton.setLatitude(location.getLatitude());
-            Singleton.setLongitude(location.getLongitude());
+
+            Utilidades.getLocation(this, getApplicationContext());
+
         }
 
         imageToSend = findViewById(R.id.imageToSend);

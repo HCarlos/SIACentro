@@ -12,4 +12,5 @@
     <color name="secondaryLight">#C3962D</color>
     <color name="gray">#56565A</color>
     <color name="grayfuerte">#38383A</color>
+    <color name="colorAccent">#8D712F</color>
 </resources>

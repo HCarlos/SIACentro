@@ -9,8 +9,8 @@ public class AppConfig {
 //    public static String URL_HOME_API = "http://10.0.2.2:8000/api/v1/";
 //    public static String URL_HOME = "https://servimun.mx/api/v1/";
 
-    public static String URL_HOME = "https://servimun.mx/";
-    public static String URL_HOME_API = "https://servimun.mx/api/v1/";
+    public static String URL_HOME = "https://siac.villahermosa.gob.mx/";
+    public static String URL_HOME_API = "https://siac.villahermosa.gob.mx/api/v1/";
 
     public static String LOGIN = URL_HOME_API;
     public static String LOGOUT = URL_HOME_API + "logout";

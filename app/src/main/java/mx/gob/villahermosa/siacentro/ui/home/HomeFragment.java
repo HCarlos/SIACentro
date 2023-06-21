@@ -24,10 +24,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
-
 import mx.gob.villahermosa.siacentro.R;
 import mx.gob.villahermosa.siacentro.classes.databases.UserDB;
 import mx.gob.villahermosa.siacentro.classes.databases.UserEntity;
+import mx.gob.villahermosa.siacentro.classes.interfases.ActualizarDemandasInterface;
 import mx.gob.villahermosa.siacentro.classes.responses.DenunciasHeaderResponse;
 import mx.gob.villahermosa.siacentro.classes.responses.DenunciasResponse;
 import mx.gob.villahermosa.siacentro.data.adapters.ApiDenunciaAdapter;
@@ -37,7 +37,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeFragment extends Fragment implements Callback<DenunciasHeaderResponse> {
+public class HomeFragment extends Fragment implements Callback<DenunciasHeaderResponse>, ActualizarDemandasInterface {
 
     private List<DenunciasResponse> denuncias_response;
     private FragmentHomeBinding binding;
@@ -78,12 +78,9 @@ public class HomeFragment extends Fragment implements Callback<DenunciasHeaderRe
     public void mostrar_usuario_logeado(Context context){
 
         userEntity = UserDB.getUserFromId(1);
-
-
         LinearLayout ll1 = binding.lnHrz;
         RelativeLayout scv1 = binding.scroll1;
         if  (userEntity != null) {
-
 
             ll1.setVisibility(View.VISIBLE);
             scv1.setVisibility(View.VISIBLE);
@@ -107,12 +104,8 @@ public class HomeFragment extends Fragment implements Callback<DenunciasHeaderRe
             Button btnIngresar1 = binding.btnIngresar1;
             Button btnRegistry1 = binding.btnRegistry1;
 
-            Log.e("NAVIGATION", "UNO");
-
             btnIngresar1.setOnClickListener(v -> {
-                Log.e("NAVIGATION", "DOS");
                 onClickIngresar1();
-                Log.e("NAVIGATION", "TRES");
             });
 
             btnRegistry1.setOnClickListener(v -> {
@@ -179,11 +172,15 @@ public class HomeFragment extends Fragment implements Callback<DenunciasHeaderRe
         LinearLayoutManager llm = new LinearLayoutManager(context);
         llm.setOrientation(VERTICAL);
         MisDenunciasAdapter adapter = new MisDenunciasAdapter(this.getActivity(),context,denuncias_response);
+
         rvDenuncia = requireActivity().findViewById(R.id.rvMisDenuncias);
         rvDenuncia.setLayoutManager(llm);
         rvDenuncia.setAdapter(adapter);
+    }
 
-
+    @Override
+    public void actualizarDemandas() {
+        obtenerDenuncias();
     }
 
 }

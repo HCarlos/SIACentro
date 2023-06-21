@@ -1,4 +1,6 @@
 package mx.gob.villahermosa.siacentro.classes.controllers;
+import static mx.gob.villahermosa.siacentro.classes.databases.UserDB.context;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -8,14 +10,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.location.Address;
-import android.location.Geocoder;
+import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
-import android.provider.MediaStore;
 
 import android.provider.OpenableColumns;
 import android.telephony.TelephonyManager;
@@ -28,12 +28,11 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import mx.gob.villahermosa.siacentro.classes.Singleton;
@@ -61,23 +60,6 @@ public class Utilidades {
     public void hideDialog() {
         if (pDialog.isShowing())
             this.pDialog.dismiss();
-    }
-
-    public static void GetGPS(Activity _activity, LocationManager _lm, int _tipo) throws IOException {
-
-        activity = _activity;
-        lm = _lm;
-        tipo = _tipo;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
-            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    123);
-        } else {
-            if (tipo == 0) {
-                getLatLon();
-            }
-        }
     }
 
     public static void GetSMSData(Activity _activity, LocationManager _lm, int _tipo) {
@@ -108,92 +90,6 @@ public class Utilidades {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA},
                     123);
         }
-
-    }
-
-    public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) throws IOException {
-        // super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 123) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted.
-                if (tipo == 0) {
-                    getLatLon();
-                }
-                if (tipo == 1) {
-                    getSMSData();
-                }
-            } else {
-                Toast.makeText(activity, "No tiene los permisos necesarios, para utilizar esta App.", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    public static void getLatLon() throws IOException {
-
-        GPSTracker gps = new GPSTracker(activity);
-        int status;
-        if (!gps.canGetLocation()) {
-            return;
-        }
-        status = GooglePlayServicesUtil
-                .isGooglePlayServicesAvailable(activity);
-
-        double current_lattitude;
-        double current_longitude;
-        if (status == ConnectionResult.SUCCESS) {
-            current_lattitude = gps.getLatitude();
-            current_longitude = gps.getLongitude();
-            if (gps.getLocation() != null){
-                current_altitud = gps.getLocation().getAltitude();
-            }
-
-            Singleton.setLatitude(current_lattitude);
-            Singleton.setLongitude(current_longitude);
-            Singleton.setAltitud(current_altitud);
-
-//            Singleton.setIsGPS(true);
-
-            Log.d("LAT LON ALT", "" + current_lattitude + " | "
-                    + current_longitude + " | "
-                    + current_altitud);
-
-            if (current_lattitude == 0.0 && current_longitude == 0.0) {
-                current_lattitude = 22.22;
-                current_longitude = 22.22;
-                current_altitud = 0.0;
-
-                Singleton.setLatitude(current_lattitude);
-                Singleton.setLongitude(current_longitude);
-                Singleton.setAltitud(current_altitud);
-
-//                Singleton.setIsGPS(false);
-
-            }
-
-        } else {
-            current_lattitude = 22.22;
-            current_longitude = 22.22;
-
-            Singleton.setLatitude(current_lattitude);
-            Singleton.setLongitude(current_longitude);
-
-//            Singleton.setIsGPS(false);
-
-        }
-
-
-        Geocoder geocoder;
-        List<Address> addresses;
-        geocoder = new Geocoder(activity, Locale.getDefault());
-
-        addresses = geocoder.getFromLocation(current_lattitude, current_longitude, 1);
-
-        String address = addresses.get(0).getAddressLine(0);
-        String city = addresses.get(0).getLocality();
-        String state = addresses.get(0).getAdminArea();
-        String country = addresses.get(0).getCountryName();
-        String postalCode = addresses.get(0).getPostalCode();
-        Singleton.setDireccionGoogle(address + " " + city + " " + state + " " + country + " " + postalCode);
 
     }
 
@@ -288,7 +184,24 @@ public class Utilidades {
         return phrase.toString();
     }
 
+    public static void getLocation(Activity activity, Context context){
+        FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity);
+        if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        fusedLocationClient.getLastLocation()
+            .addOnSuccessListener(activity, new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    if (location != null) {
+                        Singleton.setLatitude(location.getLatitude());
+                        Singleton.setLongitude(location.getLongitude());
+                        //Toast.makeText(context, "Latitud : " + Singleton.getLatitude() + ",\n Longitud : " + Singleton.getLongitude(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
 
+    }
 
 
 

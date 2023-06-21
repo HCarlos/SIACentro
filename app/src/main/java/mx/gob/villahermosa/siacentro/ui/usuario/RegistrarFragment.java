@@ -77,6 +77,7 @@ public class RegistrarFragment extends Fragment implements Callback<RegistryResp
             btnRegistrar.setEnabled(false);
             Log.d("RegistroOk", "Falle en: ");
 
+//            throw new RuntimeException("Test Crash"); // Force a crash
             registry(
                     txtUsername.getText().toString(),
                     txtAp_Paterno.getText().toString(),
@@ -85,12 +86,27 @@ public class RegistrarFragment extends Fragment implements Callback<RegistryResp
                     txtEmail.getText().toString(),
                     txtDomicilio.getText().toString()
             );
+
         });
+
+//        Button crashButton = new Button(this.context);
+//        crashButton.setText("Test Crash");
+//        crashButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View view) {
+//                throw new RuntimeException("Test Crash"); // Force a crash
+//            }
+//        });
+//
+//        self.context.addContentView(crashButton, new ViewGroup.LayoutParams(
+//                ViewGroup.LayoutParams.MATCH_PARENT,
+//                ViewGroup.LayoutParams.WRAP_CONTENT));
+
+
 
     }
 
     public void registry(String username, String ap_paterno, String ap_materno, String nombre, String email, String domicilio) {
-        Call<RegistryResponse> call = ApiAdapter.getApiService().setRegistry(username, ap_paterno, ap_materno, nombre, email, domicilio, Singleton.getCombo_Id(),"DevCH50");
+        Call<RegistryResponse> call = ApiAdapter.getApiService().setRegistry(username, ap_paterno, ap_materno, nombre, email, domicilio, Singleton.getCombo_Id(),"ANDROID",Singleton.getDeviceToken());
         call.enqueue(this);
     }
 

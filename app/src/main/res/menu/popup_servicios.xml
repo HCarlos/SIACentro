@@ -11,12 +11,12 @@
         android:id="@+id/id_269"
         android:title="@string/socav_n"/>
     <item
-        android:id="@+id/id_14"
+        android:id="@+id/id_442"
         android:title="@string/reparaci_n_calles_bacheo"/>
     <item
         android:id="@+id/id_208"
         android:title="@string/alumbrado_p_blico"/>
     <item
-        android:id="@+id/id_10007"
+        android:id="@+id/id_65"
         android:title="@string/recolecci_n_de_basura"/>
 </menu>

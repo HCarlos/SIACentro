@@ -7,12 +7,15 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -31,6 +34,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -40,8 +47,8 @@ import java.util.Objects;
 import mx.gob.villahermosa.siacentro.MainActivity;
 import mx.gob.villahermosa.siacentro.R;
 import mx.gob.villahermosa.siacentro.classes.Singleton;
-import mx.gob.villahermosa.siacentro.classes.controllers.GPSTracker;
 import mx.gob.villahermosa.siacentro.classes.controllers.Permissions;
+import mx.gob.villahermosa.siacentro.classes.controllers.Utilidades;
 import mx.gob.villahermosa.siacentro.classes.databases.UserDB;
 import mx.gob.villahermosa.siacentro.classes.databases.UserEntity;
 import mx.gob.villahermosa.siacentro.classes.others.Funciones;
@@ -67,6 +74,7 @@ public class DenunciaActivity extends AppCompatActivity implements Callback<Comb
     protected String photoPath;
     protected ProgressBar loading_image_send;
     protected Permissions permisos;
+    protected FusedLocationProviderClient fusedLocationClient;
 
 
     @Override
@@ -98,11 +106,9 @@ public class DenunciaActivity extends AppCompatActivity implements Callback<Comb
         }
         permisos = new Permissions(this, getApplicationContext());
         if (permisos.chechPermisoLatLong(this)) {
-            GPSTracker gps = new GPSTracker(getApplicationContext());
-            Location location = gps.getLocation();
-            Singleton.setLatitude(location.getLatitude());
-            Singleton.setLongitude(location.getLongitude());
-            Toast.makeText(getApplicationContext(), "Latitud : " + Singleton.getLatitude() + ",\n Longitud : " + Singleton.getLongitude(), Toast.LENGTH_SHORT).show();
+
+            Utilidades.getLocation(this, getApplicationContext());
+
         }
 
         ivImageToSend = findViewById(R.id.imageToSend);
@@ -235,7 +241,9 @@ public class DenunciaActivity extends AppCompatActivity implements Callback<Comb
                         1,
                         Ubicacion,
                         Ubicacion,
-                        user_id
+                        user_id,
+                        Singleton.getDeviceToken(),
+                        Marca
                 );
                 call.enqueue(this);
             }else{

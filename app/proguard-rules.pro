@@ -34,9 +34,9 @@
 
 -keep class mx.gob.villahermosa.siacentro.classes.responses.** { *; }
 
--keepclassmembers,allowobfuscation class * {
- @mx.gob.villahermosa.siacentro.classes.responses. .annotations.SerializedName <fields>;
-}
+#-keepclassmembers,allowobfuscation class * {
+# @mx.gob.villahermosa.siacentro.classes.responses. .annotations.SerializedName <fields>;
+#}
 
 
 

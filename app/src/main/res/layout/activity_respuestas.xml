@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width= "match_parent"
+    android:layout_height= "match_parent"
+    android:orientation= "vertical"
+    android:padding="8dp"
+    >
+
+    <RelativeLayout
+        android:id="@+id/scroll3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBaseline_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:padding="8dp"
+        android:layout_marginTop="58dp"
+        android:layout_marginBottom="40dp"
+        android:orientation="vertical"
+        android:background="@drawable/background"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvRespuestasDenuncia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/llRespuestaSend"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom= "true"
+        android:gravity= "center"
+        android:padding="8dp"
+        android:background="@drawable/background"
+        >
+
+        <EditText
+            android:id="@+id/txtRespuesta"
+            android:layout_width="270dp"
+            android:layout_height="40dp"
+            android:background="@drawable/edittext_chat"
+            android:paddingStart="8dp"
+            android:textColor="@color/black"
+            android:hint="Escriba su comentario..."
+            android:textColorHint="@color/gray"
+            tools:ignore="RtlSymmetry"
+            />
+
+
+        <Button
+            android:id="@+id/btnSaveRespuesta"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:background="@drawable/ic_baseline_ok_24"
+            android:textColor="@color/white"
+             />
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/appBarMenu"
+        layout="@layout/app_bar_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="16dp" />
+
+
+
+</RelativeLayout>

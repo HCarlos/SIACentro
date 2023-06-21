@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "595608911468",
+    "project_id": "siacentro-8344d",
+    "storage_bucket": "siacentro-8344d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:595608911468:android:fc09ae56a9b6875c39e249",
+        "android_client_info": {
+          "package_name": "mx.gob.villahermosa.siacentro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "595608911468-oorm4v6jcfhjn394u3g0l4apg8hpj3p0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9jQdDKkXvAOgurJDSYtECzzCiaZSX1EM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "595608911468-oorm4v6jcfhjn394u3g0l4apg8hpj3p0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

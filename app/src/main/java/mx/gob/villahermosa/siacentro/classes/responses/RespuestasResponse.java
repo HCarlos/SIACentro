@@ -9,6 +9,10 @@ public class RespuestasResponse {
     protected String fecha = "";
     @SerializedName("respuesta")
     protected String respuesta = "";
+    @SerializedName("roleuser")
+    protected String roleuser = "";
+    @SerializedName("username")
+    protected String username = "";
     @SerializedName("observaciones")
     protected String observaciones = "";
 
@@ -43,5 +47,13 @@ public class RespuestasResponse {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
+
+    public String getRoleuser() { return roleuser; }
+
+    public void setRoleuser(String roleuser) { this.roleuser = roleuser; }
+
+    public String getUsername() { return username; }
+
+    public void setUsername(String username) { this.username = username; }
 
 }

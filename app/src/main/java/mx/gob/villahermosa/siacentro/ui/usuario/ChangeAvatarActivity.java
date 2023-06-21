@@ -7,12 +7,15 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,6 +36,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
@@ -49,7 +55,6 @@ import java.util.Objects;
 import mx.gob.villahermosa.siacentro.MainActivity;
 import mx.gob.villahermosa.siacentro.R;
 import mx.gob.villahermosa.siacentro.classes.Singleton;
-import mx.gob.villahermosa.siacentro.classes.controllers.GPSTracker;
 import mx.gob.villahermosa.siacentro.classes.controllers.Permissions;
 import mx.gob.villahermosa.siacentro.classes.controllers.PhotoUtils;
 import mx.gob.villahermosa.siacentro.classes.databases.UserDB;
@@ -103,10 +108,29 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
         Permissions permisos = new Permissions(this, getApplicationContext());
 
         if ( permisos.chechPermission(this) ){
-            GPSTracker gps = new GPSTracker(getApplicationContext());
-            Location location = gps.getLocation();
-            Singleton.setLatitude(location.getLatitude());
-            Singleton.setLongitude(location.getLongitude());
+//            GPSTracker___delete gps = new GPSTracker___delete(getApplicationContext());
+//            Location location = gps.getLocation();
+//            Singleton.setLatitude(location.getLatitude());
+//            Singleton.setLongitude(location.getLongitude());
+            FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            fusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                // Logic to handle location object
+                                Singleton.setLatitude(location.getLatitude());
+                                Singleton.setLongitude(location.getLongitude());
+                                //Toast.makeText(getApplicationContext(), "Latitud : " + Singleton.getLatitude() + ",\n Longitud : " + Singleton.getLongitude(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+
         }
 
 

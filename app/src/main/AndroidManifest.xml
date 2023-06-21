@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <!-- Recommended for Android 9 (API level 28) and lower. -->
+    <!-- Required for Android 10 (API level 29) and higher. -->
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -17,6 +19,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<!--    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />-->
 
     <application
         android:allowBackup="true"
@@ -31,16 +34,30 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
+
+
+
+
+        <activity
+            android:name=".ui.home.RespuestasActivity"
             android:exported="false"
-            android:grantUriPermissions="true"
-            tools:ignore="WrongManifestParent">
+            android:label="Agregar Imágenes"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/Theme.SIACentro.NoActionBar">
             <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.home.ImagesActivity" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="application/vnd.google.panorama360+jpg" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".ui.home.AddImageActivity"
@@ -50,7 +67,7 @@
             android:theme="@style/Theme.SIACentro.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.home.ImagesActivity" />
+                android:value=".MainActivity" />
 
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
@@ -147,6 +164,38 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <service
+            android:name="SIACLocationService"
+            android:foregroundServiceType="location">
+        </service>
+        <service
+            android:name=".classes.notifications.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:ignore="WrongManifestParent">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_stat_ic_notification" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+<!--        <meta-data-->
+<!--            android:name="com.google.firebase.messaging.default_notification_channel_id"-->
+<!--            android:value="@string/default_notification_channel_id" />-->
+
     </application>
 
 </manifest>

@@ -1,8 +1,10 @@
 package mx.gob.villahermosa.siacentro.data.interfaces;
 
+import mx.gob.villahermosa.siacentro.classes.Singleton;
 import mx.gob.villahermosa.siacentro.classes.responses.ComboResponse;
 import mx.gob.villahermosa.siacentro.classes.responses.DenunciasHeaderResponse;
 import mx.gob.villahermosa.siacentro.classes.responses.ImagenesResponse;
+import mx.gob.villahermosa.siacentro.classes.responses.RespuestasResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -11,6 +13,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public interface ApiDenunciaServiceInterface {
+
 
     @FormUrlEncoded
     @POST("denuncia/getlist")
@@ -36,7 +39,9 @@ public interface ApiDenunciaServiceInterface {
             @Field("ubicacion_id") int ubicacion_id,
             @Field("ubicacion") String ubicacion,
             @Field("ubicacion_google") String ubicacion_google,
-            @Field("user_id") int user_id
+            @Field("user_id") int user_id,
+            @Field("deviceToken") String deviceToken,
+            @Field("device_name") String marca
     );
 
     @FormUrlEncoded
@@ -55,6 +60,24 @@ public interface ApiDenunciaServiceInterface {
     Call<ComboResponse> addRespuestaDenunciaSend(
             @Header("Authorization") String autoriza,
             @Field("respuesta") String imagen,
+            @Field("denunciamobile_id") int denunciamobile_id,
+            @Field("user_id") int user_id
+    );
+
+    @FormUrlEncoded
+    @POST("denuncia/list/imagenes")
+    @Headers("Accept: application/json")
+    Call<ImagenesResponse> getImagenesFromDenunciaMobile(
+            @Header("Authorization") String autoriza,
+            @Field("denunciamobile_id") int denunciamobile_id,
+            @Field("user_id") int user_id
+    );
+
+    @FormUrlEncoded
+    @POST("denuncia/list/respuestas")
+    @Headers("Accept: application/json")
+    Call<RespuestasResponse> getRespuestasFromDenunciaMobile(
+            @Header("Authorization") String autoriza,
             @Field("denunciamobile_id") int denunciamobile_id,
             @Field("user_id") int user_id
     );

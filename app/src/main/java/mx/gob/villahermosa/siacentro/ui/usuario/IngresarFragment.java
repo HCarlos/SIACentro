@@ -28,7 +28,10 @@ import com.squareup.picasso.Picasso;
 import java.util.Objects;
 
 import mx.gob.villahermosa.siacentro.R;
+import mx.gob.villahermosa.siacentro.classes.Singleton;
 import mx.gob.villahermosa.siacentro.classes.Usuario;
+import mx.gob.villahermosa.siacentro.classes.controllers.Permissions;
+import mx.gob.villahermosa.siacentro.classes.controllers.Utilidades;
 import mx.gob.villahermosa.siacentro.classes.databases.UserDB;
 import mx.gob.villahermosa.siacentro.classes.databases.UserEntity;
 import mx.gob.villahermosa.siacentro.classes.interfases.VolleyTaskListener;
@@ -121,7 +124,7 @@ public class IngresarFragment extends Fragment implements Callback<UsuarioRespon
         Username = binding.username.getText().toString();
         Password = binding.password.getText().toString();
 
-        Call<UsuarioResponse> call = ApiAdapter.getApiService().getLogin(Username,Password);
+        Call<UsuarioResponse> call = ApiAdapter.getApiService().getLogin(Username,Password, Singleton.getDeviceToken(),"ANDROID");
         call.enqueue(this);
 
     }
