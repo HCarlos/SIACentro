@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.fragment.FragmentKt;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,13 +26,9 @@ import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
-import java.util.Objects;
-
 import mx.gob.villahermosa.siacentro.R;
 import mx.gob.villahermosa.siacentro.classes.Singleton;
 import mx.gob.villahermosa.siacentro.classes.Usuario;
-import mx.gob.villahermosa.siacentro.classes.controllers.Permissions;
-import mx.gob.villahermosa.siacentro.classes.controllers.Utilidades;
 import mx.gob.villahermosa.siacentro.classes.databases.UserDB;
 import mx.gob.villahermosa.siacentro.classes.databases.UserEntity;
 import mx.gob.villahermosa.siacentro.classes.interfases.VolleyTaskListener;
@@ -83,6 +80,8 @@ public class IngresarFragment extends Fragment implements Callback<UsuarioRespon
             loadingProgressBar.setVisibility(View.VISIBLE);
             btnIngresar.setEnabled(false);
             login();
+
+//            throw new IllegalStateException();
         });
 
         btnCerrarSession.setOnClickListener(v -> {
@@ -124,7 +123,10 @@ public class IngresarFragment extends Fragment implements Callback<UsuarioRespon
         Username = binding.username.getText().toString();
         Password = binding.password.getText().toString();
 
-        Call<UsuarioResponse> call = ApiAdapter.getApiService().getLogin(Username,Password, Singleton.getDeviceToken(),"ANDROID");
+        String deviceToken = Singleton.getDeviceToken();
+        String marca = "ANDROID";
+
+        Call<UsuarioResponse> call = ApiAdapter.getApiService().getLogin(Username,Password,deviceToken,marca);
         call.enqueue(this);
 
     }
@@ -145,8 +147,8 @@ public class IngresarFragment extends Fragment implements Callback<UsuarioRespon
                 Toast.makeText(context, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }else{
-//            Log.d("FalloLogin", "No hubo respuesta..." );
-            Toast.makeText(context, "No hubo respuesta...", Toast.LENGTH_SHORT).show();
+            Log.d("FalloLogin", "No hubo respuesta..." + response );
+            Toast.makeText(context, "No hubo respuesta... " + Singleton.getDeviceToken(), Toast.LENGTH_SHORT).show();
         }
     }
         public void onFailure (@NonNull Call < UsuarioResponse > call, Throwable t){
@@ -171,7 +173,7 @@ public class IngresarFragment extends Fragment implements Callback<UsuarioRespon
                         UserDB.InsertUserEntity();
                     }
                     userEntity = UserDB.getUserFromId(1);
-                    onSuccesResponse(userEntity);
+                    onSuccesResponse();
                 }
                 binding.loading.setVisibility(View.GONE);
                 binding.login.setEnabled(true);
@@ -181,7 +183,7 @@ public class IngresarFragment extends Fragment implements Callback<UsuarioRespon
 
         }
 
-        private void onSuccesResponse (UserEntity userEntity){
+        private void onSuccesResponse (){
 
             final FloatingActionButton fab = binding.getRoot().findViewById(R.id.fab);
             if ( fab != null ) fab.setVisibility(View.VISIBLE);
@@ -192,7 +194,7 @@ public class IngresarFragment extends Fragment implements Callback<UsuarioRespon
 
         private void onErrorResponse (String errosStream){
             FragmentManager fm = this.fragmentManager;
-            SiacDialogBasicFragment editNameDialogFragment = new SiacDialogBasicFragment("COn error de Status Cero" + errosStream);
+            SiacDialogBasicFragment editNameDialogFragment = new SiacDialogBasicFragment(errosStream);
             editNameDialogFragment.show(fm, "fragment_edit_name");
 
             login2();

@@ -17,8 +17,6 @@ import android.view.Menu;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -52,20 +50,11 @@ import mx.gob.villahermosa.siacentro.ui.usuario.ProfileActivity;
 public class MainActivity extends AppCompatActivity  {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private ActivityMainBinding binding;
     public Context context;
     public NavController navController;
     public FloatingActionButton fab;
     public UserEntity userentity;
 
-    private final ActivityResultLauncher<String> requestPermissionLauncher =
-            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                if (isGranted) {
-                    // FCM SDK (and your app) can post notifications.
-                } else {
-                    // TODO: Inform user that that your app will not show notifications.
-                }
-            });
 
 
     @SuppressLint("NonConstantResourceId")
@@ -73,7 +62,7 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        mx.gob.villahermosa.siacentro.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
          setSupportActionBar(binding.appBarMain.toolbar);
@@ -150,33 +139,25 @@ public class MainActivity extends AppCompatActivity  {
             Toast.makeText(getApplicationContext(), "No se ha dado permisos de acceso a la Cámara o Internet.", Toast.LENGTH_SHORT).show();
         }
 
-
-
-
-
-
         askNotificationPermission();
 
 
         FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
-                            return;
-                        }
-
-                        // Get new FCM registration token
-                        String token = task.getResult();
-
-                        Singleton.setDeviceToken(token);
-
-                        // Log and toast
-                        //String msg = getString(R.string.msg_token_fmt, token);
-                        Log.d(TAG, token);
-                        // Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                        return;
                     }
+
+                    // Get new FCM registration token
+                    String token = task.getResult();
+
+                    Singleton.setDeviceToken(token);
+
+                    // Log and toast
+                    //String msg = getString(R.string.msg_token_fmt, token);
+                    Log.d(TAG, token);
+                    // Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
                 });
 
 
@@ -187,13 +168,8 @@ public class MainActivity extends AppCompatActivity  {
         // This is only necessary for API level >= 33 (TIRAMISU)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
-                    PackageManager.PERMISSION_GRANTED) {
+                    PackageManager.PERMISSION_GRANTED || shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
                 // FCM SDK (and your app) can post notifications.
-            } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                // TODO: display an educational UI explaining to the user the features that will be enabled
-                //       by them granting the POST_NOTIFICATION permission. This UI should provide the user
-                //       "OK" and "No thanks" buttons. If the user selects "OK," directly request the permission.
-                //       If the user selects "No thanks," allow the user to continue without notifications.
             } else {
                 // Directly ask for the permission
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
@@ -202,6 +178,14 @@ public class MainActivity extends AppCompatActivity  {
     }
 
 
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    // FCM SDK (and your app) can post notifications.
+                } else {
+                    // TODO: Inform user that that your app will not show notifications.
+                }
+            });
 
 
 
@@ -279,7 +263,7 @@ public class MainActivity extends AppCompatActivity  {
         popup.show();//showing popup menu
     }
 
-    public boolean procesaMenu(MenuItem item){
+    public void procesaMenu(MenuItem item){
 //        switch (item.getItemId()) {
 //            default:
                 Intent i = new Intent(this, DenunciaActivity.class);
@@ -290,8 +274,7 @@ public class MainActivity extends AppCompatActivity  {
                 bundle.putString("menu_title", servicio);
                 i.putExtras(bundle);
                 startActivity(i);
-                return true;
-//        }
+        //        }
     }
 
 

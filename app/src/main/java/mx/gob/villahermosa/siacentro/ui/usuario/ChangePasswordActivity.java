@@ -3,8 +3,8 @@ package mx.gob.villahermosa.siacentro.ui.usuario;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.navigation.NavController;
-import androidx.navigation.ui.AppBarConfiguration;
+//import androidx.navigation.NavController;
+//import androidx.navigation.ui.AppBarConfiguration;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -37,9 +37,9 @@ public class ChangePasswordActivity extends AppCompatActivity implements Callbac
 
     private UserEntity userEntity;
     public Context context;
-    private AppBarConfiguration mAppBarConfiguration;
+//    private AppBarConfiguration mAppBarConfiguration;
     private ActivityChangePasswordBinding binding;
-    public NavController navController;
+//    public NavController navController;
 
     private String pas1;
     private String pas2;
@@ -136,7 +136,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements Callbac
 
             ComboResponse combo_response = response.body();
             assert combo_response != null;
-            int status = combo_response.getStatus();
+//            int status = combo_response.getStatus();
 
 //            showImage();
 

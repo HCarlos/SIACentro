@@ -35,7 +35,7 @@ public class RegistrarFragment extends Fragment implements Callback<RegistryResp
     private FragmentRegistrarBinding binding;
     public Context context;
     public FragmentManager fragmentManager;
-    private FragmentKt NavigationHostFragment;
+//    private FragmentKt NavigationHostFragment;
 
     @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,

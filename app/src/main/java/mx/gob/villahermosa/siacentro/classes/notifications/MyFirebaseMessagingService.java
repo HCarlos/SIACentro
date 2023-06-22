@@ -1,27 +1,31 @@
 package mx.gob.villahermosa.siacentro.classes.notifications;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+//import android.app.NotificationChannel;
+//import android.app.NotificationManager;
+//import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Build;
+//import android.content.Intent;
+//import android.media.RingtoneManager;
+//import android.net.Uri;
+//import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat;
+//import androidx.core.app.NotificationCompat;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.Worker;
+import androidx.work.WorkerParameters;
 
-import com.google.android.gms.common.api.Result;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import mx.gob.villahermosa.siacentro.MainActivity;
-import mx.gob.villahermosa.siacentro.R;
+//import mx.gob.villahermosa.siacentro.MainActivity;
+//import mx.gob.villahermosa.siacentro.R;
+import mx.gob.villahermosa.siacentro.classes.Singleton;
+
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-
 
     private static final String TAG = "MyFirebaseMsgService";
 
@@ -36,13 +40,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
 
-            if (/* Check if data needs to be processed by long running job */ true) {
-                // For long-running tasks (10 seconds or more) use WorkManager.
-                scheduleJob();
-            } else {
-                // Handle message within 10 seconds
-                handleNow();
-            }
+            // For long-running tasks (10 seconds or more) use WorkManager.
+            scheduleJob();
 
         }
 
@@ -79,25 +78,26 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private void scheduleJob() {
         // [START dispatch_job]
-//        OneTimeWorkRequest work = new OneTimeWorkRequest.Builder(MyWorker.class)
-//                .build();
-//        WorkManager.getInstance(this).beginWith(work).enqueue();
+        OneTimeWorkRequest work = new OneTimeWorkRequest.Builder(MyWorker.class)
+                .build();
+        WorkManager.getInstance(this).beginWith(work).enqueue();
         // [END dispatch_job]
     }
 
-    private void handleNow() {
-        Log.d(TAG, "Short lived task is done.");
-    }
+//    private void handleNow() {
+//        Log.d(TAG, "Short lived task is done.");
+//    }
 
     private void sendRegistrationToServer(String token) {
         // TODO: Implement this method to send token to your app server.
+        Singleton.setDeviceToken(token);
     }
 
-
+    /*
     private void sendNotification(String messageBody) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_IMMUTABLE);
 
         String channelId = "fcm_default_channel";
@@ -122,22 +122,23 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationManager.createNotificationChannel(channel);
         }
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify(0 , notificationBuilder.build());
     }
 
-//    public static class MyWorker extends CoroutineScheduler.Worker {
-//
-//        public MyWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
-//            super(context, workerParams);
-//        }
-//
-//        @NonNull
-//        @Override
-//        public Result doWork() {
-//            // TODO(developer): add long running task here.
-//            return Result.success();
-//        }
-//    }
+*/
 
 
+    public static class MyWorker extends Worker {
+
+        public MyWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+            super(context, workerParams);
+        }
+
+        @NonNull
+        @Override
+        public Result doWork() {
+            // TODO(developer): add long running task here.
+            return Result.success();
+        }
+    }
 }

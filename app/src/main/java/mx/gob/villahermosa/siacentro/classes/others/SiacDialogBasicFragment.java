@@ -10,8 +10,8 @@ import androidx.fragment.app.DialogFragment;
 
 public class SiacDialogBasicFragment extends DialogFragment {
 
-    private final String titulo = "SAC";
-    private final String Mensaje = "!";
+    private final String titulo = "SIACentro";
+    public  String Mensaje = "!";
 
 //    Tambien se puede usar esto
 //            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -21,8 +21,8 @@ public class SiacDialogBasicFragment extends DialogFragment {
 //            dialog.show();
 
 
-    public SiacDialogBasicFragment(String Mensaje) {
-        Mensaje = Mensaje;
+    public SiacDialogBasicFragment(String _Mensaje) {
+        Mensaje = _Mensaje;
 
     }
 
@@ -30,7 +30,7 @@ public class SiacDialogBasicFragment extends DialogFragment {
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(this.Mensaje)
+        builder.setMessage(Mensaje)
                 .setPositiveButton("Aceptar", (dialog, id) -> {
                 });
         return builder.create();

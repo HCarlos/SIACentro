@@ -20,7 +20,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.location.Location;
+//import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -38,7 +38,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
+//import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
@@ -79,7 +79,7 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
     public Uri photoURI;
     public Uri selectedImage;
     private ImageView avatar;
-    private Boolean IsIMage;
+    public Boolean IsIMage;
     public String photoPath;
 
     @Override
@@ -117,16 +117,13 @@ public class ChangeAvatarActivity extends AppCompatActivity implements Callback<
                 return;
             }
             fusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            // Got last known location. In some rare situations this can be null.
-                            if (location != null) {
-                                // Logic to handle location object
-                                Singleton.setLatitude(location.getLatitude());
-                                Singleton.setLongitude(location.getLongitude());
-                                //Toast.makeText(getApplicationContext(), "Latitud : " + Singleton.getLatitude() + ",\n Longitud : " + Singleton.getLongitude(), Toast.LENGTH_SHORT).show();
-                            }
+                    .addOnSuccessListener(this, location -> {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            // Logic to handle location object
+                            Singleton.setLatitude(location.getLatitude());
+                            Singleton.setLongitude(location.getLongitude());
+                            //Toast.makeText(getApplicationContext(), "Latitud : " + Singleton.getLatitude() + ",\n Longitud : " + Singleton.getLongitude(), Toast.LENGTH_SHORT).show();
                         }
                     });
 

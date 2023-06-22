@@ -3,7 +3,7 @@ package mx.gob.villahermosa.siacentro.ui.usuario;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
-import androidx.navigation.ui.AppBarConfiguration;
+//import androidx.navigation.ui.AppBarConfiguration;
 
 import android.content.Context;
 import android.content.Intent;
@@ -29,19 +29,17 @@ import mx.gob.villahermosa.siacentro.databinding.ActivityProfileBinding;
 public class ProfileActivity extends AppCompatActivity {
 
 
-    private UserEntity userEntity;
     public Context context;
-    private AppBarConfiguration mAppBarConfiguration;
-    private ActivityProfileBinding binding;
-    public NavController navController;
+//    public NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
-        userEntity = UserDB.getUserFromId(1);
-        binding = ActivityProfileBinding.inflate(getLayoutInflater());
+        UserEntity userEntity = UserDB.getUserFromId(1);
+        //    private AppBarConfiguration mAppBarConfiguration;
+        mx.gob.villahermosa.siacentro.databinding.ActivityProfileBinding binding = ActivityProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         TextView txtTitulo = binding.appBarMenu.txtTitulo;
@@ -68,7 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
         ImageView ivBasicImage = binding.imgHomeUserFrag;
 
         int dr = R.drawable.empty_user_female;
-        if (this.userEntity.getGenero() == 1){
+        if (userEntity.getGenero() == 1){
             dr = R.drawable.empty_user_male;
         }
         Picasso
@@ -94,7 +92,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         TextView txtGenero = binding.Genero;
 
-        if (this.userEntity.getGenero() == 1){
+        if (userEntity.getGenero() == 1){
             txtGenero.setText(R.string.Hombre);
         }else{
             txtGenero.setText(R.string.Mujer);
